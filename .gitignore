@@ -59,3 +59,7 @@ typings/
 
 # next.js build output
 .next
+
+# Self settings and data
+settings.json
+data.json
