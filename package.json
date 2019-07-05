@@ -1,0 +1,24 @@
+{
+  "name": "zap",
+  "version": "1.0.0",
+  "description": "A customized all-in-one bot.",
+  "main": "bot.js",
+  "dependencies": {
+    "data-store": "^3.1.0",
+    "eris": "^0.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zapteryx/Zap.git"
+  },
+  "author": "zapteryx",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/zapteryx/Zap/issues"
+  },
+  "homepage": "https://github.com/zapteryx/Zap#readme"
+}
