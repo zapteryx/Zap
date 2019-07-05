@@ -64,6 +64,8 @@ function getBar(progress) {
   else if (progress < 100) {return "◻◻◻◻◻◻◻◻◻◼";}
   else {return "◻◻◻◻◻◻◻◻◻◻";}
 }
+function noCache(module) {require("fs").watchFile(require("path").resolve(module), () => {delete require.cache[require.resolve(module)]})}
+var test = require('modules/test.js')
 
 bot.on("connect", (id) => {
   bot.createMessage("587916017976475648", "Shard #" + id + " has started a connection.");
@@ -91,6 +93,16 @@ bot.on("shardReady", (id) => {
 
 bot.on("shardResume", (id) => {
   bot.createMessage("587916017976475648", "Shard #" + id + " has resumed.")
+})
+
+bot.on("messageCreate", (msg) => {
+  text = msg.content.split(" ");
+  if (msg.author.id == "191739936871809024" && text[1] == "/eval") {
+    evalQuery = msg.content.split(text[0]);
+    finalQuery = evalQuery.join(" ");
+    try {evaled = eval(finalQuery).toString(); bot.createMessage(msg.channel.id, "**Success!** Output:\n```js\n" + evaled + "```");}
+    catch (err) {bot.createMessage(msg.channel.id, "**Error!** Output:\n```js\n" + err.toString() + "```");}
+  }
 })
 
 bot.connect()
