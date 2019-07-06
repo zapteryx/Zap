@@ -8,8 +8,8 @@ module.exports.help = [{cmd: "eval", desc: "Evaluates code."}, {cmd: "load", des
 module.exports.events = [];
 module.exports.actions = function (event, cmd, body, obj) {
   if (cmd == "eval") {
-    try {evaled = eval(body).toString(); msg.channel.createMessage("**Success!** Output:\n```js\n" + evaled + "```");}
-    catch (err) {msg.channel.createMessage("**Error!** Output:\n```js\n" + err.toString() + "```");}
+    try {evaled = eval(body).toString(); obj.channel.createMessage("**Success!** Output:\n```js\n" + evaled + "```");}
+    catch (err) {obj.channel.createMessage("**Error!** Output:\n```js\n" + err.toString() + "```");}
   }
   else if (cmd == "load") {
     number = 0;
@@ -37,7 +37,7 @@ module.exports.actions = function (event, cmd, body, obj) {
       if (mArr[number].name == body) {
         mArr[number] = reload("./" + mArr[number].name + ".js");
         console.log("[Modules] Module " + mArr[number].name + " was reloaded successfully.");
-        msg.channel.createMessage("Module " + mArr[number].name + " was reloaded successfully.");
+        obj.channel.createMessage("Module " + mArr[number].name + " was reloaded successfully.");
         exists = true;
         number = mArr.length;
       }
@@ -45,7 +45,7 @@ module.exports.actions = function (event, cmd, body, obj) {
     }
     setTimeout(function () {
       if (exists != true) {
-        msg.channel.createMessage("Module does not exist!");
+        obj.channel.createMessage("Module does not exist!");
       }
     }, 20)
   }

@@ -23,7 +23,7 @@ module.exports.actions = function (event, cmd, body, obj) {
           otherNumber++;
         }
         else {
-          msg.channel.createMessage("Critical error displaying help: Module `" + mArr[number].name + "` has a missing command description.");
+          obj.channel.createMessage("Critical error displaying help: Module `" + mArr[number].name + "` has a missing command description.");
           error = true;
           number = mArr.length;
           return;
@@ -41,14 +41,13 @@ module.exports.actions = function (event, cmd, body, obj) {
           newHelp.push(JSON.parse(help[number]));
           number++;
         }
-        msg.channel.createMessage({
+        obj.channel.createMessage({
           embed: {
             title: "Help",
             description: "Here are a list of commands:",
             fields: newHelp
           }
         })
-        //msg.channel.createMessage("```\n" + help.join("\n") + "\n```")
       }
     }, 20)
   }

@@ -6,14 +6,14 @@ module.exports.help = [{cmd: "ping", desc: "Pong!"}, {cmd: "pong", desc: "Ping?"
 module.exports.events = [];
 module.exports.actions = function (event, cmd, body, obj) {
   if (cmd == "ping" || cmd == "pong") {
-    if (msg.member) {
-      msg.channel.createMessage("Pinging...")
+    if (obj.member) {
+      obj.channel.createMessage("Pinging...")
       .then(function(res) {
         ram = process.memoryUsage().heapUsed / 1024 / 1024;
         roundedRam = roundTo(ram, 2);
-        botPing = new Date() - msg.createdAt;
+        botPing = new Date() - obj.createdAt;
         roundedBotPing = roundTo(botPing, 2);
-        msg.channel.editMessage(res.id, {
+        obj.channel.editMessage(res.id, {
           content: "Pong!",
           embed: {
             color: 0x00FF00,
@@ -21,7 +21,7 @@ module.exports.actions = function (event, cmd, body, obj) {
             fields: [
               {
                 name: "API Latency",
-                value: msg.member.guild.shard.latency.toString() + "ms",
+                value: obj.member.guild.shard.latency.toString() + "ms",
                 inline: true
               },
               {
@@ -43,13 +43,13 @@ module.exports.actions = function (event, cmd, body, obj) {
       })
     }
     else {
-      msg.channel.createMessage("Pinging...")
+      obj.channel.createMessage("Pinging...")
       .then(function(res) {
         ram = process.memoryUsage().heapUsed / 1024 / 1024;
         roundedRam = roundTo(ram, 2);
-        botPing = new Date() - msg.createdAt;
+        botPing = new Date() - obj.createdAt;
         roundedBotPing = roundTo(botPing, 2);
-        msg.channel.editMessage(res.id, {
+        obj.channel.editMessage(res.id, {
           content: "Pong!",
           embed: {
             color: 0x00FF00,
