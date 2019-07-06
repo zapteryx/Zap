@@ -9,11 +9,17 @@ module.exports.actions = function (cmd, body, msg) {
     number = 0;
     error = false;
     while (number < mArr.length) {
-      help.push("[" + mArr[number].name + "]");
+      str = [];
+      str.push("{\"name\": \"" + mArr[number].name.charAt(0).toUpperCase() + mArr[number].name.slice(1) + "\", \"value\": \"");
       otherNumber = 0;
       while (otherNumber < mArr[number].commands.length) {
         if (mArr[number].commands[otherNumber] == mArr[number].help[otherNumber].cmd) {
-          help.push(mArr[number].commands[otherNumber] + ": " + mArr[number].help[otherNumber].desc);
+          if (otherNumber == 0) {
+            str.push(mArr[number].commands[otherNumber] + ": " + mArr[number].help[otherNumber].desc);
+          }
+          else {
+            str.push("\\n" + mArr[number].commands[otherNumber] + ": " + mArr[number].help[otherNumber].desc);
+          }
           otherNumber++;
         }
         else {
@@ -23,11 +29,26 @@ module.exports.actions = function (cmd, body, msg) {
           return;
         }
       }
+      str.push("\"}");
+      help.push(str.join(""))
       number++;
     }
     setTimeout(function() {
       if (error != true) {
-        msg.channel.createMessage("```\n" + help.join("\n") + "\n```")
+        number = 0;
+        newHelp = [];
+        while (number < help.length) {
+          newHelp.push(JSON.parse(help[number]));
+          number++;
+        }
+        msg.channel.createMessage({
+          embed: {
+            title: "Help",
+            description: "Here are a list of commands:",
+            fields: newHelp
+          }
+        })
+        //msg.channel.createMessage("```\n" + help.join("\n") + "\n```")
       }
     }, 20)
   }
