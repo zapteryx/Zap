@@ -2,6 +2,7 @@ var mArr = require("../bot.js").mArr;
 var reload = require('require-reload')(require);
 
 module.exports.commands = ["eval", "load", "reload"];
+module.exports.events = [];
 module.exports.actions = function (cmd, body, msg) {
   if (cmd == "eval") {
     try {evaled = eval(body).toString(); msg.channel.createMessage("**Success!** Output:\n```js\n" + evaled + "```");}

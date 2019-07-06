@@ -44,6 +44,7 @@ function msToTime(ms) {
 }
 
 module.exports.commands = ["ping", "pong"];
+module.exports.events = [];
 module.exports.actions = function (cmd, body, msg) {
   if (cmd == "ping" || cmd == "pong") {
     msg.channel.createMessage("Pinging...")
