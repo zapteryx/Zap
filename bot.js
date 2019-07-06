@@ -100,6 +100,7 @@ bot.on("shardReady", (id) => {console.log("[Shards] Shard #" + id + " is now rea
 
 bot.on("shardResume", (id) => {console.log("[Shards] Shard #" + id + " has resumed.")})
 
+// Received a new message
 bot.on("messageCreate", (msg) => {
   text = msg.content.split(" ");
   if (text[0].startsWith(settings.get("prefix")) == true) {
@@ -132,6 +133,380 @@ bot.on("messageCreate", (msg) => {
         }
       }
     }, 20)
+  }
+})
+
+// New channel was created
+bot.on("channelCreate", (channel) => {
+  cmd = null;
+  body = null;
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("channelCreate") == true) {module.actions("channelCreate", cmd, body, channel);}
+    number++;
+  }
+})
+
+// Channel was deleted
+bot.on("channelDelete", (channel) => {
+  cmd = null;
+  body = null;
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("channelDelete") == true) {module.actions("channelDelete", cmd, body, channel);}
+    number++;
+  }
+})
+
+// Channel was updated
+bot.on("channelUpdate", (channel, oldChannel) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(channel);
+  objArray.push(oldChannel);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("channelUpdate") == true) {module.actions("channelUpdate", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// User was banned from a guild
+bot.on("guildBanAdd", (guild, user) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(guild);
+  objArray.push(user);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("guildBanAdd") == true) {module.actions("guildBanAdd", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// User ban was lifted
+bot.on("guildBanRemove", (guild, user) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(guild);
+  objArray.push(user);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("guildBanRemove") == true) {module.actions("guildBanRemove", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// Bot joined a new guild
+bot.on("guildCreate", (guild) => {
+  cmd = null;
+  body = null;
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("guildCreate") == true) {module.actions("guildCreate", cmd, body, guild);}
+    number++;
+  }
+})
+
+// Bot left a guild
+bot.on("guildDelete", (guild) => {
+  cmd = null;
+  body = null;
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("guildDelete") == true) {module.actions("guildDelete", cmd, body, guild);}
+    number++;
+  }
+})
+
+// Guild emojis changed
+bot.on("guildEmojisUpdate", (guild, emojis, oldEmojis) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(guild);
+  objArray.push(emojis);
+  objArray.push(oldEmojis);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("guildEmojisUpdate") == true) {module.actions("guildEmojisUpdate", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// User joined a guild
+bot.on("guildMemberAdd", (guild, member) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(guild);
+  objArray.push(member);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("guildMemberAdd") == true) {module.actions("guildMemberAdd", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// User left a guild / kicked / banned
+bot.on("guildMemberRemove", (guild, member) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(guild);
+  objArray.push(member);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("guildMemberRemove") == true) {module.actions("guildMemberRemove", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// User roles or nickname updated
+bot.on("guildMemberUpdate", (guild, member, oldMember) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(guild);
+  objArray.push(member);
+  objArray.push(oldMember);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("guildMemberUpdate") == true) {module.actions("guildMemberUpdate", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// New role created
+bot.on("guildRoleCreate", (guild, role) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(guild);
+  objArray.push(role);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("guildRoleCreate") == true) {module.actions("guildRoleCreate", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// Role deleted
+bot.on("guildRoleDelete", (guild, role) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(guild);
+  objArray.push(role);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("guildRoleDelete") == true) {module.actions("guildRoleDelete", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// Role updated
+bot.on("guildRoleUpdate", (guild, role, oldRole) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(guild);
+  objArray.push(role);
+  objArray.push(oldRole);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("guildRoleUpdate") == true) {module.actions("guildRoleUpdate", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// Guild unavailable
+bot.on("guildUnavailable", (guild) => {
+  cmd = null;
+  body = null;
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("guildUnavailable") == true) {module.actions("guildUnavailable", cmd, body, guild);}
+    number++;
+  }
+})
+
+// Guild updated
+bot.on("guildUpdate", (guild, oldGuild) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(guild);
+  objArray.push(oldGuild);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("guildUpdate") == true) {module.actions("guildUpdate", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// Message deleted
+bot.on("messageDelete", (msg) => {
+  cmd = null;
+  body = null;
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("messageDelete") == true) {module.actions("messageDelete", cmd, body, msg);}
+    number++;
+  }
+})
+
+// Messages deleted in bulk
+bot.on("messageDeleteBulk", (msgs) => {
+  cmd = null;
+  body = null;
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("messageDeleteBulk") == true) {module.actions("messageDeleteBulk", cmd, body, msgs);}
+    number++;
+  }
+})
+
+// Message reaction added
+bot.on("messageReactionAdd", (msg, emoji, userID) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(msg);
+  objArray.push(emoji);
+  objArray.push(userID);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("messageReactionAdd") == true) {module.actions("messageReactionAdd", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// Message reaction removed
+bot.on("messageReactionRemove", (msg, emoji, userID) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(msg);
+  objArray.push(emoji);
+  objArray.push(userID);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("messageReactionRemove") == true) {module.actions("messageReactionRemove", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// All reactions removed from a message
+bot.on("messageReactionRemoveAll", (msg) => {
+  cmd = null;
+  body = null;
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("messageReactionRemoveAll") == true) {module.actions("messageReactionRemoveAll", cmd, body, msg);}
+    number++;
+  }
+})
+
+// Message updated
+bot.on("messageUpdate", (msg, oldMsg) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(msg);
+  objArray.push(oldMsg);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("messageUpdate") == true) {module.actions("messageUpdate", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// User status updated
+bot.on("presenceUpdate", (member, oldPresence) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(member);
+  objArray.push(oldPresence);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("presenceUpdate") == true) {module.actions("presenceUpdate", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// User updated
+bot.on("userUpdate", (user, oldUser) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(user);
+  objArray.push(oldUser);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("userUpdate") == true) {module.actions("userUpdate", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// User joined voice channel
+bot.on("voiceChannelJoin", (member, newChannel) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(member);
+  objArray.push(newChannel);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("voiceChannelJoin") == true) {module.actions("voiceChannelJoin", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// User left voice channel
+bot.on("voiceChannelLeave", (member, oldChannel) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(member);
+  objArray.push(oldChannel);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("voiceChannelLeave") == true) {module.actions("voiceChannelLeave", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// User switched voice channel
+bot.on("voiceChannelSwitch", (member, newChannel, oldChannel) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(member);
+  objArray.push(newChannel);
+  objArray.push(oldChannel);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("voiceChannelSwitch") == true) {module.actions("voiceChannelSwitch", cmd, body, objArray);}
+    number++;
+  }
+})
+
+// User voice state changed (muted, deafened, self-muted, self-deafened)
+bot.on("voiceStateUpdate", (member, oldState) => {
+  cmd = null;
+  body = null;
+  objArray = [];
+  objArray.push(member);
+  objArray.push(oldState);
+  number = 0;
+  while (number < mArr.length) {
+    if (mArr[number].events.includes("voiceStateUpdate") == true) {module.actions("voiceStateUpdate", cmd, body, objArray);}
+    number++;
   }
 })
 
