@@ -6,7 +6,7 @@ var reload = require('require-reload')(require);
 var fs = require('fs');
 var bot = new Eris(settings.get("token"));
 
-/*function roundTo(n, digits) {
+function roundTo(n, digits) {
     var negative = false;
     if (digits === undefined) {digits = 0;}
     if (n < 0) {negative = true; n = n * -1;}
@@ -65,11 +65,14 @@ function getBar(progress) {
   else if (progress < 90) {return "◻◻◻◻◻◻◻◻◼◼";}
   else if (progress < 100) {return "◻◻◻◻◻◻◻◻◻◼";}
   else {return "◻◻◻◻◻◻◻◻◻◻";}
-}*/
+}
 var mArr = [];
 module.exports.mArr = mArr;
 module.exports.settings = settings;
 module.exports.data = data;
+module.exports.roundTo = roundTo;
+module.exports.msToTime = msToTime;
+module.exports.getRndInteger = getRndInteger;
 fs.readdir("modules", (err, files) => {
   number = 0;
   while (number < files.length) {
