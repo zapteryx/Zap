@@ -73,6 +73,7 @@ module.exports.data = data;
 module.exports.roundTo = roundTo;
 module.exports.msToTime = msToTime;
 module.exports.getRndInteger = getRndInteger;
+module.exports.bot = bot;
 fs.readdir("modules", (err, files) => {
   number = 0;
   while (number < files.length) {
