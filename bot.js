@@ -134,11 +134,9 @@ bot.on("messageCreate", (msg) => {
       }
     }, 20)
   }
-  cmd = null;
-  body = null;
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("messageCreate") == true) {module.actions("messageCreate", cmd, body, msg);}
+    if (mArr[number].events.includes("messageCreate") == true) {module.actions("messageCreate", null, null, msg);}
     number++;
   }
 })
