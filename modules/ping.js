@@ -4,7 +4,7 @@ msToTime = require("../bot.js").msToTime;
 module.exports.commands = ["ping", "pong"];
 module.exports.help = [{cmd: "ping", desc: "Pong!"}, {cmd: "pong", desc: "Ping!"}]
 module.exports.events = [];
-module.exports.actions = function (event, cmd, body, obj) {
+module.exports.actions = function (type, cmd, body, obj) {
   if (cmd == "ping" || cmd == "pong") {
     if (obj.member) {
       obj.channel.createMessage("Pinging...")

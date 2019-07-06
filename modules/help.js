@@ -3,7 +3,7 @@ var mArr = require("../bot.js").mArr;
 module.exports.commands = ["help"];
 module.exports.help = [{cmd: "help", desc: "Do you expect anything?"}]
 module.exports.events = [];
-module.exports.actions = function (event, cmd, body, obj) {
+module.exports.actions = function (type, cmd, body, obj) {
   if (cmd == "help") {
     help = [];
     number = 0;
