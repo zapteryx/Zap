@@ -2,6 +2,8 @@ const Eris = require('eris');
 const Store = require('data-store');
 const settings = new Store({ path: 'settings.json' });
 const data = new Store({ path: 'data.json' });
+var reload = require('require-reload')(require);
+var fs = require('fs');
 var bot = new Eris(settings.get("token"));
 
 function roundTo(n, digits) {
@@ -64,44 +66,59 @@ function getBar(progress) {
   else if (progress < 100) {return "◻◻◻◻◻◻◻◻◻◼";}
   else {return "◻◻◻◻◻◻◻◻◻◻";}
 }
-function noCache(module) {require("fs").watchFile(require("path").resolve(module), () => {delete require.cache[require.resolve(module)]})}
-var test = require('modules/test.js')
-
-bot.on("connect", (id) => {
-  bot.createMessage("587916017976475648", "Shard #" + id + " has started a connection.");
+var mArr = [];
+fs.readdir("modules", (err, files) => {
+  number = 0;
+  while (number < files.length) {
+    mArr.push(reload("./modules/" + files[number]));
+    console.log("Module " + mArr[number].name + " was loaded successfully.");
+    number++;
+  }
 })
 
-bot.on("hello", (trace, id) => {
-  bot.createMessage("587916017976475648", "Shard #" + id + " has received Hello from gateway.");
-})
+bot.on("connect", (id) => {console.log("[Sharding] Shard #" + id + " has initiated a connection.")})
 
-bot.on("ready", () => {
-  bot.createMessage("587916017976475648", "All shards ready.");
-})
+bot.on("hello", (trace, id) => {console.log("[Sharding] Shard #" + id + " has received Hello from gateway.")})
 
-bot.on("shardDisconnect", (error, id) => {
-  bot.createMessage("587916017976475648", "Shard #" + id + " has disconnected.")
-})
+bot.on("ready", () => {console.log("[Sharding] All shards are ready.")})
 
-bot.on("shardPreReady", (id) => {
-  bot.createMessage("587916017976475648", "Shard #" + id + " is now in pre-ready.")
-})
+bot.on("shardDisconnect", (error, id) => {console.log("[Sharding] Shard #" + id + " has disconnected.")})
 
-bot.on("shardReady", (id) => {
-  bot.createMessage("587916017976475648", "Shard #" + id + " is now ready.")
-})
+bot.on("shardPreReady", (id) => {console.log("[Sharding] Shard #" + id + " is now in pre-ready.")})
 
-bot.on("shardResume", (id) => {
-  bot.createMessage("587916017976475648", "Shard #" + id + " has resumed.")
-})
+bot.on("shardReady", (id) => {console.log("[Sharding] Shard #" + id + " is now ready.")})
+
+bot.on("shardResume", (id) => {console.log("[Sharding] Shard #" + id + " has resumed.")})
 
 bot.on("messageCreate", (msg) => {
   text = msg.content.split(" ");
-  if (msg.author.id == "191739936871809024" && text[1] == "/eval") {
-    evalQuery = msg.content.split(text[0]);
-    finalQuery = evalQuery.join(" ");
-    try {evaled = eval(finalQuery).toString(); bot.createMessage(msg.channel.id, "**Success!** Output:\n```js\n" + evaled + "```");}
-    catch (err) {bot.createMessage(msg.channel.id, "**Error!** Output:\n```js\n" + err.toString() + "```");}
+  if (text[0].startsWith(settings.get("prefix")) == true) {
+    cmd = text[0].substr(settings.get("prefix").length);
+    body = msg.content.substr(msg.content.indexOf(text[1]));
+    number = 0;
+    while (number < mArr.length) {
+      if (mArr[number].commands.includes(cmd) == true) {exists = true; module = mArr[number]; number = mArr.length;}
+      else {number++;}
+    }
+    setTimeout(function() {
+      if (exists == true && module.managersOnly != true) {
+        module.actions(cmd, body, msg);
+      }
+      else if (exists == true && module.managersOnly == true) {
+        if (settings.get("managers").includes(msg.author.id) == true) {
+          module.actions(cmd, body, msg);
+        }
+        else {
+          msg.channel.createMessage({
+            embed: {
+              title: "No permission",
+              description: "This command is restricted to bot managers only.",
+              color: 0xFF0000
+            }
+          })
+        }
+      }
+    }, 20)
   }
 })
 
