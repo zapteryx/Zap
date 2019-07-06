@@ -1,4 +1,7 @@
 var mArr = require("../bot.js").mArr;
+const Store = require('data-store');
+const settings = new Store({ path: './settings.json' });
+const data = new Store({ path: './data.json' });
 var reload = require('require-reload')(require);
 
 module.exports.commands = ["eval", "load", "reload"];
