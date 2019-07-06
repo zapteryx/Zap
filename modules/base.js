@@ -5,6 +5,7 @@ const data = new Store({ path: './data.json' });
 var reload = require('require-reload')(require);
 
 module.exports.commands = ["eval", "load", "reload"];
+module.exports.help = [{cmd: "eval", desc: "Evaluates code."}, {cmd: "load", desc: "Load an unloaded module."}, {cmd: "reload", desc: "Reload a loaded module."}]
 module.exports.events = [];
 module.exports.actions = function (cmd, body, msg) {
   if (cmd == "eval") {

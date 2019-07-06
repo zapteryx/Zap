@@ -44,6 +44,7 @@ function msToTime(ms) {
 }
 
 module.exports.commands = ["ping", "pong"];
+module.exports.help = [{cmd: "ping", desc: "Pong!"}, {cmd: "pong", desc: "Ping?"}]
 module.exports.events = [];
 module.exports.actions = function (cmd, body, msg) {
   if (cmd == "ping" || cmd == "pong") {
