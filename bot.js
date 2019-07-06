@@ -102,6 +102,7 @@ bot.on("messageCreate", (msg) => {
     cmd = text[0].substr(settings.get("prefix").length);
     body = msg.content.substr(msg.content.indexOf(text[1]));
     number = 0;
+    exists = false;
     while (number < mArr.length) {
       if (mArr[number].commands.includes(cmd) == true) {exists = true; module = mArr[number]; number = mArr.length;}
       else {number++;}
@@ -112,6 +113,7 @@ bot.on("messageCreate", (msg) => {
         module.actions("messageCreate", cmd, body, msg);
       }
       else if (exists == true && module.managersOnly == true) {
+        console.log("[Modules] " + msg.author.username + "#" + msg.author.discriminator + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")
         if (settings.get("managers").includes(msg.author.id) == true) {
           module.actions("messageCreate", cmd, body, msg);
         }
