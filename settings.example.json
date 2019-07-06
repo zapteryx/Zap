@@ -1,0 +1,8 @@
+{
+  "token": "token here",
+  "prefix": "prefix here",
+  "managers": [
+    "id of manager 1",
+    "id of manager 2"
+  ]
+}
