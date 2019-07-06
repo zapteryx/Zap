@@ -80,6 +80,9 @@ fs.readdir("modules", (err, files) => {
     console.log("[Modules] Module " + mArr[number].name + " was loaded successfully.");
     number++;
   }
+  if (files.includes("base.js") == false) {
+    console.log("[Modules] Module base was not found. This can limit your module management abilities, which is the opposite of what the bot was made for. You can download the base module from GitHub at https://github.com/zapteryx/Zap/.")
+  }
 })
 
 bot.on("connect", (id) => {console.log("[Shards] Shard #" + id + " has initiated a connection.")})
