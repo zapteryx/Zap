@@ -43,7 +43,7 @@ module.exports.actions = function (event, cmd, body, obj) {
         }
         obj.channel.createMessage({
           embed: {
-            title: "Help",
+            title: "Command List",
             description: "Here are a list of commands:",
             fields: newHelp
           }
