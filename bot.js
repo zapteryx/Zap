@@ -77,19 +77,19 @@ fs.readdir("modules", (err, files) => {
   }
 })
 
-bot.on("connect", (id) => {console.log("[Sharding] Shard #" + id + " has initiated a connection.")})
+bot.on("connect", (id) => {console.log("[Shards] Shard #" + id + " has initiated a connection.")})
 
-bot.on("hello", (trace, id) => {console.log("[Sharding] Shard #" + id + " has received Hello from gateway.")})
+bot.on("hello", (trace, id) => {console.log("[Shards] Shard #" + id + " has received Hello from gateway.")})
 
-bot.on("ready", () => {console.log("[Sharding] All shards are ready.")})
+bot.on("ready", () => {console.log("[Shards] All shards are ready.")})
 
-bot.on("shardDisconnect", (error, id) => {console.log("[Sharding] Shard #" + id + " has disconnected.")})
+bot.on("shardDisconnect", (error, id) => {console.log("[Shards] Shard #" + id + " has disconnected.")})
 
-bot.on("shardPreReady", (id) => {console.log("[Sharding] Shard #" + id + " is now in pre-ready.")})
+bot.on("shardPreReady", (id) => {console.log("[Shards] Shard #" + id + " is now in pre-ready.")})
 
-bot.on("shardReady", (id) => {console.log("[Sharding] Shard #" + id + " is now ready.")})
+bot.on("shardReady", (id) => {console.log("[Shards] Shard #" + id + " is now ready.")})
 
-bot.on("shardResume", (id) => {console.log("[Sharding] Shard #" + id + " has resumed.")})
+bot.on("shardResume", (id) => {console.log("[Shards] Shard #" + id + " has resumed.")})
 
 bot.on("messageCreate", (msg) => {
   text = msg.content.split(" ");
