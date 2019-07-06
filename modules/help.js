@@ -1,7 +1,7 @@
 var mArr = require("../bot.js").mArr;
 
 module.exports.commands = ["help"];
-module.exports.help = [{cmd: "help", desc: "Do you expect anything?"}];
+module.exports.help = [{cmd: "help", desc: "What should I say?"}];
 module.exports.events = [];
 module.exports.actions = function (type, cmd, body, obj) {
   if (cmd == "help") {
@@ -15,10 +15,10 @@ module.exports.actions = function (type, cmd, body, obj) {
       while (otherNumber < mArr[number].commands.length) {
         if (mArr[number].commands[otherNumber] == mArr[number].help[otherNumber].cmd) {
           if (otherNumber == 0) {
-            str.push(mArr[number].commands[otherNumber] + ": " + mArr[number].help[otherNumber].desc);
+            str.push("**" + mArr[number].commands[otherNumber] + "**: " + mArr[number].help[otherNumber].desc);
           }
           else {
-            str.push("\\n" + mArr[number].commands[otherNumber] + ": " + mArr[number].help[otherNumber].desc);
+            str.push("\\n**" + mArr[number].commands[otherNumber] + "**: " + mArr[number].help[otherNumber].desc);
           }
           otherNumber++;
         }

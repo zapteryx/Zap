@@ -16,7 +16,7 @@ module.exports.actions = function (type, cmd, body, obj) {
     loaded = false;
     while (number < mArr.length) {
       if (mArr[number].name == body) {
-        msg.channel.createMessage("Module already loaded!");
+        obj.channel.createMessage("Module already loaded!");
         loaded = true;
         number = mArr.length;
       }
@@ -26,7 +26,7 @@ module.exports.actions = function (type, cmd, body, obj) {
       if (loaded != true) {
         mArr.push(reload("./" + body + ".js"));
         console.log("[Modules] Module " + mArr[mArr.length - 1].name + " was loaded successfully.");
-        msg.channel.createMessage("Module `" + mArr[mArr.length - 1].name + "` was loaded successfully.");
+        obj.channel.createMessage("Module `" + mArr[mArr.length - 1].name + "` was loaded successfully.");
       }
     }, 20)
   }
