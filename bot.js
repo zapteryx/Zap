@@ -109,11 +109,11 @@ bot.on("messageCreate", (msg) => {
     setTimeout(function() {
       if (exists == true && module.managersOnly != true) {
         console.log("[Modules] " + msg.author.username + "#" + msg.author.discriminator + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")
-        module.actions(cmd, body, msg);
+        module.actions("messageCreate", cmd, body, msg);
       }
       else if (exists == true && module.managersOnly == true) {
         if (settings.get("managers").includes(msg.author.id) == true) {
-          module.actions(cmd, body, msg);
+          module.actions("messageCreate", cmd, body, msg);
         }
         else {
           msg.channel.createMessage({

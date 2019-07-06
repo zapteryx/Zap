@@ -6,7 +6,7 @@ var reload = require('require-reload')(require);
 module.exports.commands = ["eval", "load", "reload"];
 module.exports.help = [{cmd: "eval", desc: "Evaluates code."}, {cmd: "load", desc: "Load an unloaded module."}, {cmd: "reload", desc: "Reload a loaded module."}]
 module.exports.events = [];
-module.exports.actions = function (cmd, body, msg) {
+module.exports.actions = function (event, cmd, body, msg) {
   if (cmd == "eval") {
     try {evaled = eval(body).toString(); msg.channel.createMessage("**Success!** Output:\n```js\n" + evaled + "```");}
     catch (err) {msg.channel.createMessage("**Error!** Output:\n```js\n" + err.toString() + "```");}
