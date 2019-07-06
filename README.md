@@ -8,4 +8,4 @@
 ![Version](https://img.shields.io/github/package-json/v/zapteryx/Zap.svg?style=for-the-badge)
 ![npm](https://img.shields.io/npm/v/zap.svg?style=for-the-badge)
 
-A customized all-in-one bot.
+A customized all-in-one Discord bot.
