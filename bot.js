@@ -120,7 +120,7 @@ bot.on("messageCreate", (msg) => {
       else if (exists == true && module.managersOnly == true) {
         console.log("[Modules] " + msg.author.username + "#" + msg.author.discriminator + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")
         if (settings.get("managers").includes(msg.author.id) == true) {
-          module.actions("messageCreate", cmd, body, msg);
+          module.actions("command", cmd, body, msg);
         }
         else {
           msg.channel.createMessage({
