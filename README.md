@@ -60,4 +60,4 @@ name - Very important. Do NOT use the same module name in two modules.
 Put this into a file ending with .js, and put it in the modules folder. If the bot is already running, use `(prefix)load filenamewithoutjs` (without .js ending, so if the module was in ping.js, then name is ping). If the bot hasn't started, it will load the module on the next start up. If you'd like to make changes to the file, save the file and use `(prefix)reload modulename` (module name specified at the bottom of the module file).
 
 ## Important Note
-For now, nothing too important, really. Just note that the project is licensed under GPL-v3.0, and also ensure you have base.js and help.js in your modules folder. The rest are optional.
+For now, nothing too important, really. Just note that the project is licensed under [GPL-v3.0](https://github.com/zapteryx/Zap/blob/master/LICENSE), and also ensure you have base.js and help.js in your modules folder. The rest are optional.
