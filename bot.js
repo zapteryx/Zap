@@ -136,7 +136,7 @@ bot.on("messageCreate", (msg) => {
   }
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("messageCreate") == true) {module.actions("messageCreate", null, null, msg);}
+    if (mArr[number].events.includes("messageCreate") == true) {mArr[number].actions("messageCreate", null, null, msg);}
     number++;
   }
 })
@@ -147,7 +147,7 @@ bot.on("channelCreate", (channel) => {
   body = null;
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("channelCreate") == true) {module.actions("channelCreate", cmd, body, channel);}
+    if (mArr[number].events.includes("channelCreate") == true) {mArr[number].actions("channelCreate", cmd, body, channel);}
     number++;
   }
 })
@@ -158,7 +158,7 @@ bot.on("channelDelete", (channel) => {
   body = null;
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("channelDelete") == true) {module.actions("channelDelete", cmd, body, channel);}
+    if (mArr[number].events.includes("channelDelete") == true) {mArr[number].actions("channelDelete", cmd, body, channel);}
     number++;
   }
 })
@@ -172,7 +172,7 @@ bot.on("channelUpdate", (channel, oldChannel) => {
   objArray.push(oldChannel);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("channelUpdate") == true) {module.actions("channelUpdate", cmd, body, objArray);}
+    if (mArr[number].events.includes("channelUpdate") == true) {mArr[number].actions("channelUpdate", cmd, body, objArray);}
     number++;
   }
 })
@@ -186,7 +186,7 @@ bot.on("guildBanAdd", (guild, user) => {
   objArray.push(user);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("guildBanAdd") == true) {module.actions("guildBanAdd", cmd, body, objArray);}
+    if (mArr[number].events.includes("guildBanAdd") == true) {mArr[number].actions("guildBanAdd", cmd, body, objArray);}
     number++;
   }
 })
@@ -200,7 +200,7 @@ bot.on("guildBanRemove", (guild, user) => {
   objArray.push(user);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("guildBanRemove") == true) {module.actions("guildBanRemove", cmd, body, objArray);}
+    if (mArr[number].events.includes("guildBanRemove") == true) {mArr[number].actions("guildBanRemove", cmd, body, objArray);}
     number++;
   }
 })
@@ -211,7 +211,7 @@ bot.on("guildCreate", (guild) => {
   body = null;
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("guildCreate") == true) {module.actions("guildCreate", cmd, body, guild);}
+    if (mArr[number].events.includes("guildCreate") == true) {mArr[number].actions("guildCreate", cmd, body, guild);}
     number++;
   }
 })
@@ -222,7 +222,7 @@ bot.on("guildDelete", (guild) => {
   body = null;
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("guildDelete") == true) {module.actions("guildDelete", cmd, body, guild);}
+    if (mArr[number].events.includes("guildDelete") == true) {mArr[number].actions("guildDelete", cmd, body, guild);}
     number++;
   }
 })
@@ -237,7 +237,7 @@ bot.on("guildEmojisUpdate", (guild, emojis, oldEmojis) => {
   objArray.push(oldEmojis);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("guildEmojisUpdate") == true) {module.actions("guildEmojisUpdate", cmd, body, objArray);}
+    if (mArr[number].events.includes("guildEmojisUpdate") == true) {mArr[number].actions("guildEmojisUpdate", cmd, body, objArray);}
     number++;
   }
 })
@@ -251,7 +251,7 @@ bot.on("guildMemberAdd", (guild, member) => {
   objArray.push(member);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("guildMemberAdd") == true) {module.actions("guildMemberAdd", cmd, body, objArray);}
+    if (mArr[number].events.includes("guildMemberAdd") == true) {mArr[number].actions("guildMemberAdd", cmd, body, objArray);}
     number++;
   }
 })
@@ -265,7 +265,7 @@ bot.on("guildMemberRemove", (guild, member) => {
   objArray.push(member);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("guildMemberRemove") == true) {module.actions("guildMemberRemove", cmd, body, objArray);}
+    if (mArr[number].events.includes("guildMemberRemove") == true) {mArr[number].actions("guildMemberRemove", cmd, body, objArray);}
     number++;
   }
 })
@@ -280,7 +280,7 @@ bot.on("guildMemberUpdate", (guild, member, oldMember) => {
   objArray.push(oldMember);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("guildMemberUpdate") == true) {module.actions("guildMemberUpdate", cmd, body, objArray);}
+    if (mArr[number].events.includes("guildMemberUpdate") == true) {mArr[number].actions("guildMemberUpdate", cmd, body, objArray);}
     number++;
   }
 })
@@ -294,7 +294,7 @@ bot.on("guildRoleCreate", (guild, role) => {
   objArray.push(role);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("guildRoleCreate") == true) {module.actions("guildRoleCreate", cmd, body, objArray);}
+    if (mArr[number].events.includes("guildRoleCreate") == true) {mArr[number].actions("guildRoleCreate", cmd, body, objArray);}
     number++;
   }
 })
@@ -308,7 +308,7 @@ bot.on("guildRoleDelete", (guild, role) => {
   objArray.push(role);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("guildRoleDelete") == true) {module.actions("guildRoleDelete", cmd, body, objArray);}
+    if (mArr[number].events.includes("guildRoleDelete") == true) {mArr[number].actions("guildRoleDelete", cmd, body, objArray);}
     number++;
   }
 })
@@ -323,7 +323,7 @@ bot.on("guildRoleUpdate", (guild, role, oldRole) => {
   objArray.push(oldRole);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("guildRoleUpdate") == true) {module.actions("guildRoleUpdate", cmd, body, objArray);}
+    if (mArr[number].events.includes("guildRoleUpdate") == true) {mArr[number].actions("guildRoleUpdate", cmd, body, objArray);}
     number++;
   }
 })
@@ -334,7 +334,7 @@ bot.on("guildUnavailable", (guild) => {
   body = null;
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("guildUnavailable") == true) {module.actions("guildUnavailable", cmd, body, guild);}
+    if (mArr[number].events.includes("guildUnavailable") == true) {mArr[number].actions("guildUnavailable", cmd, body, guild);}
     number++;
   }
 })
@@ -348,7 +348,7 @@ bot.on("guildUpdate", (guild, oldGuild) => {
   objArray.push(oldGuild);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("guildUpdate") == true) {module.actions("guildUpdate", cmd, body, objArray);}
+    if (mArr[number].events.includes("guildUpdate") == true) {mArr[number].actions("guildUpdate", cmd, body, objArray);}
     number++;
   }
 })
@@ -359,7 +359,7 @@ bot.on("messageDelete", (msg) => {
   body = null;
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("messageDelete") == true) {module.actions("messageDelete", cmd, body, msg);}
+    if (mArr[number].events.includes("messageDelete") == true) {mArr[number].actions("messageDelete", cmd, body, msg);}
     number++;
   }
 })
@@ -370,7 +370,7 @@ bot.on("messageDeleteBulk", (msgs) => {
   body = null;
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("messageDeleteBulk") == true) {module.actions("messageDeleteBulk", cmd, body, msgs);}
+    if (mArr[number].events.includes("messageDeleteBulk") == true) {mArr[number].actions("messageDeleteBulk", cmd, body, msgs);}
     number++;
   }
 })
@@ -385,7 +385,7 @@ bot.on("messageReactionAdd", (msg, emoji, userID) => {
   objArray.push(userID);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("messageReactionAdd") == true) {module.actions("messageReactionAdd", cmd, body, objArray);}
+    if (mArr[number].events.includes("messageReactionAdd") == true) {mArr[number].actions("messageReactionAdd", cmd, body, objArray);}
     number++;
   }
 })
@@ -400,7 +400,7 @@ bot.on("messageReactionRemove", (msg, emoji, userID) => {
   objArray.push(userID);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("messageReactionRemove") == true) {module.actions("messageReactionRemove", cmd, body, objArray);}
+    if (mArr[number].events.includes("messageReactionRemove") == true) {mArr[number].actions("messageReactionRemove", cmd, body, objArray);}
     number++;
   }
 })
@@ -411,7 +411,7 @@ bot.on("messageReactionRemoveAll", (msg) => {
   body = null;
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("messageReactionRemoveAll") == true) {module.actions("messageReactionRemoveAll", cmd, body, msg);}
+    if (mArr[number].events.includes("messageReactionRemoveAll") == true) {mArr[number].actions("messageReactionRemoveAll", cmd, body, msg);}
     number++;
   }
 })
@@ -425,7 +425,7 @@ bot.on("messageUpdate", (msg, oldMsg) => {
   objArray.push(oldMsg);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("messageUpdate") == true) {module.actions("messageUpdate", cmd, body, objArray);}
+    if (mArr[number].events.includes("messageUpdate") == true) {mArr[number].actions("messageUpdate", cmd, body, objArray);}
     number++;
   }
 })
@@ -439,7 +439,7 @@ bot.on("presenceUpdate", (member, oldPresence) => {
   objArray.push(oldPresence);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("presenceUpdate") == true) {module.actions("presenceUpdate", cmd, body, objArray);}
+    if (mArr[number].events.includes("presenceUpdate") == true) {mArr[number].actions("presenceUpdate", cmd, body, objArray);}
     number++;
   }
 })
@@ -453,7 +453,7 @@ bot.on("userUpdate", (user, oldUser) => {
   objArray.push(oldUser);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("userUpdate") == true) {module.actions("userUpdate", cmd, body, objArray);}
+    if (mArr[number].events.includes("userUpdate") == true) {mArr[number].actions("userUpdate", cmd, body, objArray);}
     number++;
   }
 })
@@ -467,7 +467,7 @@ bot.on("voiceChannelJoin", (member, newChannel) => {
   objArray.push(newChannel);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("voiceChannelJoin") == true) {module.actions("voiceChannelJoin", cmd, body, objArray);}
+    if (mArr[number].events.includes("voiceChannelJoin") == true) {mArr[number].actions("voiceChannelJoin", cmd, body, objArray);}
     number++;
   }
 })
@@ -481,7 +481,7 @@ bot.on("voiceChannelLeave", (member, oldChannel) => {
   objArray.push(oldChannel);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("voiceChannelLeave") == true) {module.actions("voiceChannelLeave", cmd, body, objArray);}
+    if (mArr[number].events.includes("voiceChannelLeave") == true) {mArr[number].actions("voiceChannelLeave", cmd, body, objArray);}
     number++;
   }
 })
@@ -496,7 +496,7 @@ bot.on("voiceChannelSwitch", (member, newChannel, oldChannel) => {
   objArray.push(oldChannel);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("voiceChannelSwitch") == true) {module.actions("voiceChannelSwitch", cmd, body, objArray);}
+    if (mArr[number].events.includes("voiceChannelSwitch") == true) {mArr[number].actions("voiceChannelSwitch", cmd, body, objArray);}
     number++;
   }
 })
@@ -510,7 +510,7 @@ bot.on("voiceStateUpdate", (member, oldState) => {
   objArray.push(oldState);
   number = 0;
   while (number < mArr.length) {
-    if (mArr[number].events.includes("voiceStateUpdate") == true) {module.actions("voiceStateUpdate", cmd, body, objArray);}
+    if (mArr[number].events.includes("voiceStateUpdate") == true) {mArr[number].actions("voiceStateUpdate", cmd, body, objArray);}
     number++;
   }
 })
