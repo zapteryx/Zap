@@ -26,7 +26,7 @@ module.exports.actions = function (event, cmd, body, obj) {
       if (loaded != true) {
         mArr.push(reload("./" + body + ".js"));
         console.log("[Modules] Module " + mArr[mArr.length - 1].name + " was loaded successfully.");
-        msg.channel.createMessage("Module " + mArr[mArr.length - 1].name + " was loaded successfully.");
+        msg.channel.createMessage("Module `" + mArr[mArr.length - 1].name + "` was loaded successfully.");
       }
     }, 20)
   }
@@ -37,7 +37,7 @@ module.exports.actions = function (event, cmd, body, obj) {
       if (mArr[number].name == body) {
         mArr[number] = reload("./" + mArr[number].name + ".js");
         console.log("[Modules] Module " + mArr[number].name + " was reloaded successfully.");
-        obj.channel.createMessage("Module " + mArr[number].name + " was reloaded successfully.");
+        obj.channel.createMessage("Module `" + mArr[number].name + "` was reloaded successfully.");
         exists = true;
         number = mArr.length;
       }
