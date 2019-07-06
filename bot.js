@@ -67,11 +67,12 @@ function getBar(progress) {
   else {return "◻◻◻◻◻◻◻◻◻◻";}
 }
 var mArr = [];
+module.exports.mArr = mArr;
 fs.readdir("modules", (err, files) => {
   number = 0;
   while (number < files.length) {
     mArr.push(reload("./modules/" + files[number]));
-    console.log("Module " + mArr[number].name + " was loaded successfully.");
+    console.log("[Modules] Module " + mArr[number].name + " was loaded successfully.");
     number++;
   }
 })
@@ -102,6 +103,7 @@ bot.on("messageCreate", (msg) => {
     }
     setTimeout(function() {
       if (exists == true && module.managersOnly != true) {
+        console.log("[Modules] " + msg.author.username + "#" + msg.author.discriminator + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")
         module.actions(cmd, body, msg);
       }
       else if (exists == true && module.managersOnly == true) {

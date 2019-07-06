@@ -1,3 +1,6 @@
+var mArr = require("../bot.js").mArr;
+var reload = require('require-reload')(require);
+
 module.exports.commands = ["eval", "load", "reload"];
 module.exports.actions = function (cmd, body, msg) {
   if (cmd == "eval") {
@@ -18,7 +21,7 @@ module.exports.actions = function (cmd, body, msg) {
     setTimeout(function () {
       if (loaded != true) {
         mArr.push(reload("./" + body + ".js"));
-        console.log("Module " + mArr[mArr.length - 1].name + " was loaded successfully.");
+        console.log("[Modules] Module " + mArr[mArr.length - 1].name + " was loaded successfully.");
         msg.channel.createMessage("Module " + mArr[mArr.length - 1].name + " was loaded successfully.");
       }
     }, 20)
@@ -28,8 +31,8 @@ module.exports.actions = function (cmd, body, msg) {
     exists = false;
     while (number < mArr.length) {
       if (mArr[number].name == body) {
-        mArr[number] = reload("./modules/" + mArr[number].name + ".js");
-        console.log("Module " + mArr[number].name + " was reloaded successfully.");
+        mArr[number] = reload("./" + mArr[number].name + ".js");
+        console.log("[Modules] Module " + mArr[number].name + " was reloaded successfully.");
         msg.channel.createMessage("Module " + mArr[number].name + " was reloaded successfully.");
         exists = true;
         number = mArr.length;

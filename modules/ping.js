@@ -43,9 +43,9 @@ function msToTime(ms) {
   }
 }
 
-module.exports.commands = ["ping"];
+module.exports.commands = ["ping", "pong"];
 module.exports.actions = function (cmd, body, msg) {
-  if (cmd == "ping") {
+  if (cmd == "ping" || cmd == "pong") {
     msg.channel.createMessage("Pinging...")
     .then(function(res) {
       ram = process.memoryUsage().heapUsed / 1024 / 1024;
