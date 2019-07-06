@@ -68,6 +68,8 @@ function getBar(progress) {
 }*/
 var mArr = [];
 module.exports.mArr = mArr;
+module.exports.settings = settings;
+module.exports.data = data;
 fs.readdir("modules", (err, files) => {
   number = 0;
   while (number < files.length) {
