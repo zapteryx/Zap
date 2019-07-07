@@ -21,7 +21,7 @@ Zap can be easily self-hosted for use by anyone.
 All you have to do is:
 1. [Download the ZIP](https://github.com/zapteryx/Zap/archive/master.zip)
 2. Extract the ZIP file using any zip extraction tool to a folder of your choice.
-3. Ensure you have NPM installed, which you can get [here](https://www.npmjs.com/get-npm)
+3. Ensure you have NodeJS installed, which you can get [here](https://nodejs.org/en/)
 4. Open a command prompt or terminal and navigate to the directory in which bot.js lives.
 5. Run `npm install` in the command prompt or terminal.
 6. Edit settings.example.json with a text editor or any editor of your choice and rename it to settings.json as soon as you're done.
@@ -30,7 +30,7 @@ All you have to do is:
 See? Really easy!
 
 ## Contributing
-Zap is a modular bot, which allows users to create their own modules easily for immediate use. Here's what you need to know.
+Zap is a modular bot written in JavaScript using the Eris library, which allows users to create their own modules easily for immediate use. Here's what you need to know.
 
 ```js
 module.exports.commands = ["hello", "bye", "heee"];
