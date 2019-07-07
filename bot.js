@@ -113,16 +113,20 @@ bot.on("messageCreate", (msg) => {
       else {number++;}
     }
     setTimeout(function() {
-      if (exists == true && module.managersOnly != true) {
+      if (exists == true) {
         console.log("[Modules] " + msg.author.username + "#" + msg.author.discriminator + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")
-        module.actions("command", cmd, body, msg);
-      }
-      else if (exists == true && module.managersOnly == true) {
-        console.log("[Modules] " + msg.author.username + "#" + msg.author.discriminator + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")
-        if (settings.get("managers").includes(msg.author.id) == true) {
-          module.actions("command", cmd, body, msg);
+        permsNeeded = module.help.find(function (cmds) {return cmds.cmd == cmd;}).perm;
+        permsMissing = [];
+        if (permsNeeded.length > 0) {
+          number = 0;
+          while (number < permsNeeded.length) {
+            if (msg.member.permission.has(permsNeeded[number]) != true) {permsMissing.push("`" + permsNeeded[number] + "`");}
+            number++;
+          }
+          if (permsMissing.length == 1) {str = "permission";}
+          else {str = "permissions";}
         }
-        else {
+        if (module.managersOnly == true && settings.get("managers").includes(msg.author.id) != true) {
           msg.channel.createMessage({
             embed: {
               title: "No permission",
@@ -130,6 +134,18 @@ bot.on("messageCreate", (msg) => {
               color: 0xFF0000
             }
           })
+        }
+        else if (permsMissing.length > 0) {
+          msg.channel.createMessage({
+            embed: {
+              title: "No permission",
+              description: "You are missing the " + permsMissing.join(", ") + " " + str + ".",
+              color: 0xFF0000
+            }
+          })
+        }
+        else {
+          module.actions("command", cmd, body, msg);
         }
       }
     }, 20)

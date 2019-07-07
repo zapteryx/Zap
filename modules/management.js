@@ -1,7 +1,7 @@
 var bot = require("../bot.js").bot;
 
 module.exports.commands = ["mentionrole", "mrole"];
-module.exports.help = [{cmd: "mentionrole", desc: "Mention a role, regardless mentionable or not."}, {cmd: "mrole", desc: "Alias to `mentionrole`"}];
+module.exports.help = [{cmd: "mentionrole", desc: "Mention a role, regardless mentionable or not.", perm: ["mentionEveryone"]}, {cmd: "mrole", desc: "Alias to `mentionrole`", perm: ["mentionEveryone"]}];
 module.exports.events = [];
 module.exports.actions = function (type, cmd, body, obj) {
   if (type == "command" && cmd == "mentionrole" || type == "command" && cmd == "mrole") {
@@ -41,5 +41,5 @@ module.exports.actions = function (type, cmd, body, obj) {
     }
   }
 }
-module.exports.managersOnly = true;
+module.exports.managersOnly = false;
 module.exports.name = "management";

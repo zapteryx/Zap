@@ -2,18 +2,17 @@ roundTo = require("../bot.js").roundTo;
 msToTime = require("../bot.js").msToTime;
 
 module.exports.commands = ["ping", "pong"];
-module.exports.help = [{cmd: "ping", desc: "Pong!"}, {cmd: "pong", desc: "Alias to `ping`"}];
+module.exports.help = [{cmd: "ping", desc: "Pong!", perm: []}, {cmd: "pong", desc: "Alias to `ping`", perm: []}];
 module.exports.events = [];
 module.exports.actions = function (type, cmd, body, obj) {
   if (cmd == "ping" || cmd == "pong") {
     if (obj.member) {
       obj.channel.createMessage("Pinging...")
       .then(function(res) {
+        botPing = res.timestamp - new Date();
         ram = process.memoryUsage().heapUsed / 1024 / 1024;
         roundedRam = roundTo(ram, 2);
-        botPing = new Date() - obj.createdAt;
-        roundedBotPing = roundTo(botPing, 2);
-        obj.channel.editMessage(res.id, {
+        res.channel.editMessage(res.id, {
           content: "Pong!",
           embed: {
             color: 0x00FF00,
@@ -26,7 +25,7 @@ module.exports.actions = function (type, cmd, body, obj) {
               },
               {
                 name: "Message Round Trip",
-                value: roundedBotPing.toString() + "ms",
+                value: botPing + "ms",
                 inline: true
               },
               {
@@ -57,7 +56,7 @@ module.exports.actions = function (type, cmd, body, obj) {
             fields: [
               {
                 name: "Message Round Trip",
-                value: roundedBotPing.toString() + "ms",
+                value: botPing + "ms",
                 inline: true
               },
               {
