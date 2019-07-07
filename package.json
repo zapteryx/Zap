@@ -1,12 +1,11 @@
 {
   "name": "zapbot",
-  "version": "1.0.1",
-  "description": "A customized all-in-one bot.",
+  "version": "1.0.0",
+  "description": "A customized modular all-in-one Discord bot.",
   "main": "bot.js",
   "dependencies": {
     "data-store": "^3.1.0",
     "eris": "^0.10.0",
-    "np": "^5.0.3",
     "require-reload": "^0.2.2"
   },
   "devDependencies": {},
@@ -23,17 +22,5 @@
     "url": "https://github.com/zapteryx/Zap/issues"
   },
   "homepage": "https://github.com/zapteryx/Zap#readme",
-  "keywords": [
-    "discord",
-    "bot",
-    "open",
-    "source",
-    "self",
-    "host",
-    "easy",
-    "modules",
-    "modular",
-    "quick",
-    "setup"
-  ]
+  "keywords": []
 }
