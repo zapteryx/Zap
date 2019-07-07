@@ -5,7 +5,6 @@
 ![Travis](https://img.shields.io/travis/com/zapteryx/Zap.svg?style=for-the-badge)
 ![Discord](https://img.shields.io/discord/574949938929074186.svg?color=7289DA&label=Discord&style=for-the-badge)
 ![GitHub](https://img.shields.io/github/license/zapteryx/Zap.svg?style=for-the-badge)
-![npm](https://img.shields.io/npm/v/zapbot.svg?style=for-the-badge)
 
 A customized modular all-in-one Discord bot.
 
