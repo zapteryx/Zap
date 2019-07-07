@@ -49,7 +49,7 @@ module.exports.actions = function (type, cmd, body, obj) {
           }
         })
       }
-    }, 20)
+    }, 5)
   }
 }
 module.exports.managersOnly = false;

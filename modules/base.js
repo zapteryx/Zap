@@ -28,7 +28,7 @@ module.exports.actions = function (type, cmd, body, obj) {
         console.log("[Modules] Module " + mArr[mArr.length - 1].name + " was loaded successfully.");
         obj.channel.createMessage("Module `" + mArr[mArr.length - 1].name + "` was loaded successfully.");
       }
-    }, 20)
+    }, 5)
   }
   else if (cmd == "reload") {
     number = 0;
@@ -47,7 +47,7 @@ module.exports.actions = function (type, cmd, body, obj) {
       if (exists != true) {
         obj.channel.createMessage("Module does not exist!");
       }
-    }, 20)
+    }, 5)
   }
 }
 module.exports.managersOnly = true;

@@ -148,7 +148,7 @@ bot.on("messageCreate", (msg) => {
           module.actions("command", cmd, body, msg);
         }
       }
-    }, 20)
+    }, 5)
   }
   number = 0;
   while (number < mArr.length) {
