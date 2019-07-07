@@ -27,7 +27,7 @@ All you have to do is:
 6. Edit settings.example.json with a text editor or any editor of your choice and rename it to settings.json as soon as you're done.
 7. Run `node bot.js` in the same command prompt or terminal.
 
-See? Really easy!
+See? Really easy! If you still need a video tutorial, [click here](https://www.youtube.com/watch?v=del4fuI_Hs0).
 
 ## Contributing
 Zap is a modular bot written in JavaScript using the Eris library, which allows users to create their own modules easily for immediate use. Here's what you need to know.
