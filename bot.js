@@ -103,7 +103,7 @@ bot.on("messageCreate", (msg) => {
     }
     setTimeout(function() {
       if (exists == true && module.managersOnly != true) {
-        console.log("[Modules] " + msg.author.username + "#" + msg.author.discriminator + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")
+        console.log("[Modules] " + msg.author.tag + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")
         module.actions(cmd, body, msg);
       }
       else if (exists == true && module.managersOnly == true) {
