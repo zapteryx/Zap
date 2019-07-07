@@ -21,7 +21,7 @@ Zap can be easily self-hosted for use by anyone.
 All you have to do is:
 1. [Download the ZIP](https://github.com/zapteryx/Zap/archive/master.zip)
 2. Extract the ZIP file using any zip extraction tool to a folder of your choice.
-3. Ensure you have NodeJS installed, which you can get [here](https://nodejs.org/en/)
+3. Ensure you have NodeJS installed, which you can get [here](https://nodejs.org/en/). If you just installed it, give your computer a quick restart before proceeding.
 4. Open a command prompt or terminal and navigate to the directory in which bot.js lives.
 5. Run `npm install` in the command prompt or terminal.
 6. Edit settings.example.json with a text editor or any editor of your choice and rename it to settings.json as soon as you're done.
