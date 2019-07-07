@@ -82,7 +82,7 @@ fs.readdir("modules", (err, files) => {
     number++;
   }
   if (files.includes("base.js") == false) {
-    console.log("[Modules] Module base was not found. This can limit your module management abilities, which is the opposite of what the bot was made for. You can download the base module from GitHub at https://github.com/zapteryx/Zap/.")
+    console.log("[Modules] Module base was not found. This can limit your module management abilities, which is the opposite of what the bot was made for. You can download the base module from GitHub at https://short.zptx.icu/zap.")
   }
 })
 
