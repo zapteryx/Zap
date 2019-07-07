@@ -9,7 +9,8 @@ module.exports.actions = function (type, cmd, body, obj) {
     if (obj.member) {
       obj.channel.createMessage("Pinging...")
       .then(function(res) {
-        botPing = res.timestamp - new Date();
+        botPing = new Date() - res.timestamp;
+        if (botPing < 0) {botPing = botPing * -1}
         ram = process.memoryUsage().heapUsed / 1024 / 1024;
         roundedRam = roundTo(ram, 2);
         res.channel.editMessage(res.id, {
@@ -46,8 +47,8 @@ module.exports.actions = function (type, cmd, body, obj) {
       .then(function(res) {
         ram = process.memoryUsage().heapUsed / 1024 / 1024;
         roundedRam = roundTo(ram, 2);
-        botPing = new Date() - obj.createdAt;
-        roundedBotPing = roundTo(botPing, 2);
+        botPing = new Date() - res.timestamp;
+        if (botPing < 0) {botPing = botPing * -1}
         obj.channel.editMessage(res.id, {
           content: "Pong!",
           embed: {
