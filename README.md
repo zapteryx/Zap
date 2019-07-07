@@ -34,7 +34,7 @@ Zap is a modular bot written in JavaScript using the Eris library, which allows 
 
 ```js
 module.exports.commands = ["hello", "bye", "heee"];
-module.exports.help = [{cmd: "hello", desc: "new phone who dis"}, {cmd: "bye", desc: "ok bye"}, {cmd: "heee", desc: "are you michael jackson?"}];
+module.exports.help = [{cmd: "hello", desc: "new phone who dis", perm: []}, {cmd: "bye", desc: "ok bye", perm: ["createInstantInvite"]}, {cmd: "heee", desc: "are you michael jackson?", perm: ["manageMessages", "attachFiles"]}];
 module.exports.events = ["messageDelete"];
 module.exports.actions = function (type, cmd, body, obj) {
   if (type == "command" && cmd == "hello") {obj.channel.createMessage("hello " + obj.author.mention)}
@@ -47,7 +47,7 @@ module.exports.name = "test";
 ```
 commands - An array of strings (of your commands). If your module does not require commands and only uses events, replace it with `[]`. Do NOT use the same commands regardless in the same module or in separate modules.
 
-help - An array of objects. The `cmd` must be in the same order as the commands above it. This is shown in the help menu.
+help - An array of objects. The `cmd` must be in the same order as the commands above it. This is shown in the help menu. A list of permissions can be found [here](https://abal.moe/Eris/docs/reference).
 
 events - An array of strings. Most events [here](https://abal.moe/Eris/docs/Client#event-channelCreate) should work perfectly fine. If unneeded, replace it with `[]`.
 
