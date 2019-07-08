@@ -1,7 +1,6 @@
 var mArr = require("../bot.js").mArr;
 
-module.exports.commands = ["help"];
-module.exports.help = [{cmd: "help", desc: "What should I say?", perm: []}];
+module.exports.commands = [{cmd: "help", desc: "What should I say?", perm: []}];
 module.exports.events = [];
 module.exports.actions = function (type, cmd, body, obj) {
   if (cmd == "help") {
@@ -13,17 +12,17 @@ module.exports.actions = function (type, cmd, body, obj) {
       str.push("{\"name\": \"" + mArr[number].name.charAt(0).toUpperCase() + mArr[number].name.slice(1) + "\", \"value\": \"");
       otherNumber = 0;
       while (otherNumber < mArr[number].commands.length) {
-        if (mArr[number].commands[otherNumber] == mArr[number].help[otherNumber].cmd) {
+        if (typeof mArr[number].commands[otherNumber].desc === "string") {
           if (otherNumber == 0) {
-            str.push("**" + mArr[number].commands[otherNumber] + "**: " + mArr[number].help[otherNumber].desc);
+            str.push("**" + mArr[number].commands[otherNumber].cmd + "**: " + mArr[number].commands[otherNumber].desc);
           }
           else {
-            str.push("\\n**" + mArr[number].commands[otherNumber] + "**: " + mArr[number].help[otherNumber].desc);
+            str.push("\\n**" + mArr[number].commands[otherNumber].cmd + "**: " + mArr[number].commands[otherNumber].desc);
           }
           otherNumber++;
         }
         else {
-          obj.channel.createMessage("Critical error displaying help: Module `" + mArr[number].name + "` has a missing command description.");
+          obj.channel.createMessage("Critical error displaying help: Module `" + mArr[number].name + "` has a missing or corrupt command description.");
           error = true;
           number = mArr.length;
           return;

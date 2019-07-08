@@ -107,19 +107,23 @@ bot.on("shardResume", (id) => {console.log("[Shards] Shard #" + id + " has resum
 // Received a new message
 bot.on("messageCreate", (msg) => {
   text = msg.content.split(" ");
-  if (text[0].startsWith(settings.get("prefix")) == true) {
-    cmd = text[0].substr(settings.get("prefix").length);
+  if (!msg.member || typeof data.get("guilds." + msg.member.guild.id + ".prefix") === "undefined") {
+    prefix = settings.get("prefix");
+  }
+  else {prefix = data.get("guilds." + msg.member.guild.id + ".prefix")}
+  if (text[0].startsWith(prefix) == true) {
+    cmd = text[0].substr(prefix.length);
     body = msg.content.substr(msg.content.indexOf(text[1]));
     number = 0;
     exists = false;
     while (number < mArr.length) {
-      if (mArr[number].commands.includes(cmd) == true) {exists = true; module = mArr[number]; number = mArr.length;}
+      if (mArr[number].commands.some(e => e.cmd === cmd)) {exists = true; module = mArr[number]; number = mArr.length;}
       else {number++;}
     }
     setTimeout(function() {
       if (exists == true) {
         console.log("[Modules] " + tag(msg.author) + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")
-        permsNeeded = module.help.find(function (cmds) {return cmds.cmd == cmd;}).perm;
+        permsNeeded = module.commands.find(function (cmds) {return cmds.cmd == cmd;}).perm;
         permsMissing = [];
         if (permsNeeded.length > 0) {
           number = 0;
