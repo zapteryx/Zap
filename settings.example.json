@@ -4,5 +4,7 @@
   "managers": [
     "id of manager 1",
     "id of manager 2"
-  ]
+  ],
+  "presence": "online",
+  "status": []
 }
