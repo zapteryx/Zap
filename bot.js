@@ -94,7 +94,7 @@ bot.on("connect", (id) => {console.log("[Shards] Shard #" + id + " has initiated
 
 bot.on("hello", (trace, id) => {console.log("[Shards] Shard #" + id + " has received Hello from gateway."); bot.editStatus("idle", {name: "loading..."})})
 
-bot.on("ready", () => {console.log("[Shards] All shards are ready."); bot.editStatus(settings.get("presence"), {name: settings.get("status.name"), type: settings.get("status.type")});})
+bot.on("ready", () => {console.log("[Shards] All shards are ready."); bot.editStatus(settings.get("presence"), {name: settings.get("status")[0].name, type: settings.get("status")[0].type});})
 
 bot.on("shardDisconnect", (error, id) => {console.log("[Shards] Shard #" + id + " has disconnected.")})
 
