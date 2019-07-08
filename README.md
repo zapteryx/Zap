@@ -6,7 +6,7 @@
 [![Discord](https://img.shields.io/discord/574949938929074186.svg?color=7289DA&label=Discord&style=for-the-badge)](https://discord.gg/enTsYhx)
 [![GitHub](https://img.shields.io/github/license/zapteryx/Zap.svg?style=for-the-badge)](https://short.zptx.icu/zap)
 
-A customized modular all-in-one Discord bot.
+A customizable modular all-in-one Discord bot.
 
 ## Getting Started
 There is currently no public instance of Zap being hosted. However, you may visit our Discord server using the button above to see it in action.
