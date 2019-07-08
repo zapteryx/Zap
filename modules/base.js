@@ -2,6 +2,7 @@ var mArr = require("../bot.js").mArr;
 var settings = require("../bot.js").settings;
 var data = require("../bot.js").data;
 var reload = require('require-reload')(require);
+var bot = require("../bot.js").bot;
 
 base = setInterval(changeStatus, 15000);
 statusIndex = 0;
