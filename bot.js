@@ -107,34 +107,62 @@ bot.on("shardResume", (id) => {console.log("[Shards] Shard #" + id + " has resum
 // Received a new message
 bot.on("messageCreate", (msg) => {
   text = msg.content.split(" ");
-  if (!msg.member || typeof data.get("guilds." + msg.member.guild.id + ".prefix") === "undefined") {
-    prefix = settings.get("prefix");
-  }
+  // If the message is in a DM or there is no guild prefix set
+  if (!msg.member || typeof data.get("guilds." + msg.member.guild.id + ".prefix") === "undefined") {prefix = settings.get("prefix");}
+  // If the message is in a guild with a guild prefix
   else {prefix = data.get("guilds." + msg.member.guild.id + ".prefix")}
-  if (text[0].startsWith(prefix) == true) {
+  // If message contains specified prefix
+  if (text[0].startsWith(prefix)) {
+    // Prepare command and body for passing to module
     cmd = text[0].substr(prefix.length);
     body = msg.content.substr(msg.content.indexOf(text[1]));
+    // While loop to check which module to pass to
     number = 0;
     exists = false;
     while (number < mArr.length) {
       if (mArr[number].commands.some(e => e.cmd === cmd)) {exists = true; module = mArr[number]; number = mArr.length;}
       else {number++;}
     }
+    // Wait 5ms to allow time for the while loop to finish
     setTimeout(function() {
-      if (exists == true) {
+      // If the module exists and the user did not just type a non-existent command
+      if (exists) {
+        // Log
         console.log("[Modules] " + tag(msg.author) + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")
-        permsNeeded = module.commands.find(function (cmds) {return cmds.cmd == cmd;}).perm;
+        // Respect DM only first
+        if (module.commands.find(function (cmds) {return cmds.cmd == cmd;}).perm.includes("dmOnly")) {
+          // No other permissions matter because DMs don't have permissions
+          permsNeeded = ["dmOnly"];
+        }
+        // Has permissions but no DM only, which means that it's guild only
+        else if (module.commands.find(function (cmds) {return cmds.cmd == cmd;}).perm.length > 0) {
+          permsNeeded = module.commands.find(function (cmds) {return cmds.cmd == cmd;}).perm;
+        }
+        // Allow both DM and guild (no permissions)
+        else {
+          permsNeeded = [];
+        }
+        // Initialize perms missing array
         permsMissing = [];
-        if (permsNeeded.length > 0) {
+        // Failed DM only requirement
+        if (permsNeeded.includes("dmOnly") && msg.member) {permsMissing.push("`dmOnly`");}
+        // Failed guild only requirement (either through manually specifying guildOnly or through specifying other permissions)
+        else if (permsNeeded.length > 0 && !msg.member) {permsMissing.push("`guildOnly`");}
+        // Not a DM and is a guild
+        else if (permsNeeded.length > 0 && msg.member) {
           number = 0;
+          // While loop to check if user has all required permissions
           while (number < permsNeeded.length) {
-            if (msg.member.permission.has(permsNeeded[number]) != true) {permsMissing.push("`" + permsNeeded[number] + "`");}
+            if (!msg.member.permission.has(permsNeeded[number])) {permsMissing.push("`" + permsNeeded[number] + "`");}
             number++;
           }
-          if (permsMissing.length == 1) {str = "permission";}
-          else {str = "permissions";}
         }
-        if (module.managersOnly == true && settings.get("managers").includes(msg.author.id) != true) {
+        // No permissions specified, no need to do anything as permsMissing is still an empty array and nothing was changed
+        // Make the response seem less robotic by adding an s if it's more than 1 and what not
+        if (permsMissing.length == 1) {str = "permission";}
+        else {str = "permissions";}
+        // If module is manager only and the user is not a manager
+        if (module.managersOnly && !settings.get("managers").includes(msg.author.id)) {
           msg.channel.createMessage({
             embed: {
               title: "No permission",
@@ -143,6 +171,7 @@ bot.on("messageCreate", (msg) => {
             }
           })
         }
+        // If a permission is missing
         else if (permsMissing.length > 0) {
           msg.channel.createMessage({
             embed: {
@@ -152,6 +181,7 @@ bot.on("messageCreate", (msg) => {
             }
           })
         }
+        // If everything was a-ok
         else {
           module.actions("command", cmd, body, msg);
         }
