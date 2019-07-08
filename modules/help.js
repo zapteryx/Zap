@@ -9,28 +9,31 @@ module.exports.actions = function (type, cmd, body, obj) {
     error = false;
     while (number < mArr.length) {
       str = [];
-      str.push("{\"name\": \"" + mArr[number].name.charAt(0).toUpperCase() + mArr[number].name.slice(1) + "\", \"value\": \"");
-      otherNumber = 0;
-      while (otherNumber < mArr[number].commands.length) {
-        if (typeof mArr[number].commands[otherNumber].desc === "string") {
-          if (otherNumber == 0) {
-            str.push("**" + mArr[number].commands[otherNumber].cmd + "**: " + mArr[number].commands[otherNumber].desc);
+      if (mArr[number].commands.length == 0) {number++;}
+      else {
+        str.push("{\"name\": \"" + mArr[number].name.charAt(0).toUpperCase() + mArr[number].name.slice(1) + "\", \"value\": \"");
+        otherNumber = 0;
+        while (otherNumber < mArr[number].commands.length) {
+          if (typeof mArr[number].commands[otherNumber].desc === "string") {
+            if (otherNumber == 0) {
+              str.push("**" + mArr[number].commands[otherNumber].cmd + "**: " + mArr[number].commands[otherNumber].desc);
+            }
+            else {
+              str.push("\\n**" + mArr[number].commands[otherNumber].cmd + "**: " + mArr[number].commands[otherNumber].desc);
+            }
+            otherNumber++;
           }
           else {
-            str.push("\\n**" + mArr[number].commands[otherNumber].cmd + "**: " + mArr[number].commands[otherNumber].desc);
+            obj.channel.createMessage("Critical error displaying help: Module `" + mArr[number].name + "` has a missing or corrupt command description.");
+            error = true;
+            number = mArr.length;
+            return;
           }
-          otherNumber++;
         }
-        else {
-          obj.channel.createMessage("Critical error displaying help: Module `" + mArr[number].name + "` has a missing or corrupt command description.");
-          error = true;
-          number = mArr.length;
-          return;
-        }
+        str.push("\"}");
+        help.push(str.join(""))
+        number++;
       }
-      str.push("\"}");
-      help.push(str.join(""))
-      number++;
     }
     setTimeout(function() {
       if (error != true) {
