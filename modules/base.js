@@ -3,7 +3,6 @@ var settings = require("../bot.js").settings;
 var data = require("../bot.js").data;
 var reload = require('require-reload')(require);
 
-module.exports.commands = [{cmd: "eval", desc: "Evaluates code.", perm: []}, {cmd: "load", desc: "Load an unloaded module.", perm: []}, {cmd: "reload", desc: "Reload a loaded module.", perm: []}, {cmd: "gprefix", desc: "Change the global default prefix.", perm: []}];
 base = setInterval(changeStatus, 15000);
 statusIndex = 0;
 function changeStatus() {
@@ -16,6 +15,7 @@ function changeStatus() {
     bot.editStatus(null, null);
   }
 }
+module.exports.commands = [{cmd: "presence", desc: "Change the bot's presence (online, idle, dnd, invisible).", perm: []}, {cmd: "status", desc: "Add or remove messages to the bot's playing status.", perm: []}, {cmd: "eval", desc: "Evaluates code.", perm: []}, {cmd: "load", desc: "Load an unloaded module.", perm: []}, {cmd: "reload", desc: "Reload a loaded module.", perm: []}, {cmd: "gprefix", desc: "Change the global default prefix.", perm: []}];
 module.exports.events = [];
 module.exports.actions = function (type, cmd, body, obj) {
   if (cmd == "eval") {
