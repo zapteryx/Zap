@@ -4,6 +4,18 @@ var data = require("../bot.js").data;
 var reload = require('require-reload')(require);
 
 module.exports.commands = [{cmd: "eval", desc: "Evaluates code.", perm: []}, {cmd: "load", desc: "Load an unloaded module.", perm: []}, {cmd: "reload", desc: "Reload a loaded module.", perm: []}, {cmd: "gprefix", desc: "Change the global default prefix.", perm: []}];
+base = setInterval(changeStatus, 15000);
+statusIndex = 0;
+function changeStatus() {
+  if (settings.get("status").length > 0) {
+    if (statusIndex >= settings.get("status").length) {statusIndex = 0;}
+    bot.editStatus(null, {name: settings.get("status")[statusIndex].name, type: settings.get("status")[statusIndex].type, url: "https://twitch.tv/twitch/"})
+    statusIndex++;
+  }
+  else {
+    bot.editStatus(null, null);
+  }
+}
 module.exports.events = [];
 module.exports.actions = function (type, cmd, body, obj) {
   if (cmd == "eval") {
