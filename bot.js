@@ -66,6 +66,9 @@ function getBar(progress) {
   else if (progress < 100) {return "◻◻◻◻◻◻◻◻◻◼";}
   else {return "◻◻◻◻◻◻◻◻◻◻";}
 }
+function tag(user) {
+  return user.username + "#" + user.discriminator;
+}
 var mArr = [];
 module.exports.mArr = mArr;
 module.exports.settings = settings;
@@ -73,6 +76,7 @@ module.exports.data = data;
 module.exports.roundTo = roundTo;
 module.exports.msToTime = msToTime;
 module.exports.getRndInteger = getRndInteger;
+module.exports.tag = tag;
 module.exports.bot = bot;
 fs.readdir("modules", (err, files) => {
   number = 0;
@@ -114,7 +118,7 @@ bot.on("messageCreate", (msg) => {
     }
     setTimeout(function() {
       if (exists == true) {
-        console.log("[Modules] " + msg.author.username + "#" + msg.author.discriminator + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")
+        console.log("[Modules] " + tag(msg.author) + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")
         permsNeeded = module.help.find(function (cmds) {return cmds.cmd == cmd;}).perm;
         permsMissing = [];
         if (permsNeeded.length > 0) {
