@@ -130,7 +130,8 @@ bot.on("messageCreate", (msg) => {
       // If the module exists and the user did not just type a non-existent command
       if (exists) {
         // Log
-        console.log("[Modules] " + tag(msg.author) + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")
+        if (!msg.member) {console.log("[Modules] " + tag(msg.author) + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")}
+        else {console.log("[Modules] " + tag(msg.author) + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + " in guild " + msg.member.guild.name + " (" + msg.member.guild.id + ").")}
         // Respect DM only first
         if (module.commands.find(function (cmds) {return cmds.cmd == cmd;}).perm.includes("dmOnly")) {
           // No other permissions matter because DMs don't have permissions
