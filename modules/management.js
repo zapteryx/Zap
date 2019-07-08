@@ -1,6 +1,8 @@
 var bot = require("../bot.js").bot;
+var settings = require("../bot.js").settings;
+var data = require("../bot.js").data;
 
-module.exports.commands = [{cmd: "mentionrole", desc: "Mention a role, regardless mentionable or not.", perm: ["mentionEveryone"]}, {cmd: "mrole", desc: "Alias to `mentionrole`", perm: ["mentionEveryone"]}];
+module.exports.commands = [{cmd: "prefix", desc: "Change the guild prefix.", perm: ["manageGuild"]}, {cmd: "mentionrole", desc: "Mention a role, regardless mentionable or not.", perm: ["mentionEveryone"]}, {cmd: "mrole", desc: "Alias to `mentionrole`", perm: ["mentionEveryone"]}];
 module.exports.events = [];
 module.exports.actions = function (type, cmd, body, obj) {
   if (type == "command" && cmd == "mentionrole" || type == "command" && cmd == "mrole") {
@@ -37,6 +39,16 @@ module.exports.actions = function (type, cmd, body, obj) {
           obj.channel.createMessage(o.mention + ": " + body.substring(body.indexOf(text[1])));
         }
       }
+    }
+  }
+  else if (type == "command" && cmd == "prefix") {
+    if (body != "") {
+      data.set("guilds." + obj.member.guild.id + ".prefix", body);
+      obj.channel.createMessage("Changed the prefix for this guild to `" + body + "`.");
+    }
+    else {
+      data.del("guilds." + obj.member.guild.id + ".prefix");
+      obj.channel.createMessage("Reset the prefix for this guild to the default global prefix `" + settings.get("prefix") + "`.")
     }
   }
 }
