@@ -107,9 +107,9 @@ module.exports.actions = function (type, cmd, body, obj) {
       if (status >= 0) {
         if (split[2]) {
           arr = settings.get("status");
-          arr.push({type: status, name: body.substring(body.indexOf(split[2]))});
+          arr.push({type: status, name: body.substring(split[0].length + split[1].length + 2)});
           settings.set("status", arr);
-          obj.channel.createMessage("Added `" + split[1] + " " + body.substring(body.indexOf(split[2])) + "` to the rotation.");
+          obj.channel.createMessage("Added `" + split[1] + " " + body.substring(split[0].length + split[1].length + 2) + "` to the rotation.");
         }
         else {
           obj.channel.createMessage("You didn't provide a game name.");
