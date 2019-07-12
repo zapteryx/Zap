@@ -42,7 +42,7 @@ module.exports.actions = function (type, cmd, body, obj) {
     }
   }
   else if (type == "command" && cmd == "prefix") {
-    if (body != "") {
+    if (body != "" && body != settings.get("prefix")) {
       data.set("guilds." + obj.member.guild.id + ".prefix", body);
       obj.channel.createMessage("Changed the prefix for this guild to `" + body + "`.");
     }
