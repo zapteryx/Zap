@@ -9,7 +9,18 @@ statusIndex = 0;
 function changeStatus() {
   if (settings.get("status").length > 0) {
     if (statusIndex >= settings.get("status").length) {statusIndex = 0;}
-    bot.editStatus(null, {name: settings.get("status")[statusIndex].name, type: settings.get("status")[statusIndex].type, url: "https://twitch.tv/twitch/"})
+    if (settings.get("status")[statusIndex].name.includes("{")) {
+      string = settings.get("status")[statusIndex].name;
+      split = string.split("{");
+      number = 0;
+      while (number < split.length) {
+        if (split[number].includes("usercount}")) {string = string.replace("{usercount}", bot.users.filter(function(){return true}).length);}
+        else if (split[number].includes("guildcount}")) {string = string.replace("{guildcount}", bot.guilds.filter(function(){return true}).length);}
+        number++;
+      }
+    }
+    else {string = settings.get("status")[statusIndex].name;}
+    bot.editStatus(null, {name: string, type: settings.get("status")[statusIndex].type, url: "https://twitch.tv/twitch/"})
     statusIndex++;
   }
   else {
