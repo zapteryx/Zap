@@ -5,14 +5,14 @@ var data = require("../bot.js").data;
 module.exports.commands = [{cmd: "prefix", desc: "Change the guild prefix.", perm: ["manageGuild"]}, {cmd: "mentionrole", desc: "Mention a role, regardless mentionable or not.", perm: ["mentionEveryone"]}, {cmd: "mrole", desc: "Alias to `mentionrole`", perm: ["mentionEveryone"]}];
 module.exports.events = [];
 module.exports.actions = function (type, cmd, body, obj) {
+  text = body.split(" ");
   if (type == "command" && cmd == "mentionrole" || type == "command" && cmd == "mrole") {
-    if (obj.member.guild.roles.map((role) => role.name).includes(text[1]) != true) {
+    if (obj.member.guild.roles.map((role) => role.name).includes(text[0]) != true) {
       obj.channel.createMessage("I couldn't find the role you were looking for. This is usually case-sensitive.");
     }
     else {
       obj.delete();
-      o = obj.member.guild.roles.find(function(role){if (role.name == text[1]) {return role;}});
-      text = body.split(" ");
+      o = obj.member.guild.roles.find(function(role){if (role.name == text[0]) {return role;}});
       if (o.mentionable == false) {
         bot.editRole(obj.member.guild.id, o.id, {mentionable: true})
         .then(function () {
@@ -23,7 +23,7 @@ module.exports.actions = function (type, cmd, body, obj) {
             })
           }
           else {
-            obj.channel.createMessage(o.mention + ": " + body.substring(body.indexOf(text[1]))).then(function () {
+            obj.channel.createMessage(o.mention + ": " + body.substring(text[0].length + 1)).then(function () {
               try {bot.editRole(obj.member.guild.id, o.id, {mentionable: false});}
               catch (e) {obj.channel.createMessage("I don't have the correct permissions to perform this action.")}
             })
@@ -36,7 +36,7 @@ module.exports.actions = function (type, cmd, body, obj) {
           obj.channel.createMessage(o.mention);
         }
         else {
-          obj.channel.createMessage(o.mention + ": " + body.substring(body.indexOf(text[1])));
+          obj.channel.createMessage(o.mention + ": " + body.substring(text[0].length + 1));
         }
       }
     }
