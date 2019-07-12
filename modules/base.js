@@ -128,7 +128,7 @@ module.exports.actions = function (type, cmd, body, obj) {
         else if (statusArr[index].type == 2) {type = "Listening to";}
         else if (statusArr[index].type == 3) {type = "Watching";}
         obj.channel.createMessage("Removing `" + type + " " + statusArr[index].name + "`.")
-        statusArr.splice(index);
+        statusArr.splice(index, 1);
         settings.set("status", statusArr);
       }
     }
