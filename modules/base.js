@@ -114,7 +114,7 @@ module.exports.actions = function (type, cmd, body, obj) {
         index = parseInt(split[1], 10) - 1;
         if (statusArr[index].type == 0) {type = "Playing";}
         else if (statusArr[index].type == 1) {type = "Streaming";}
-        else if (statusArr[index].type == 2) {type = "Listening";}
+        else if (statusArr[index].type == 2) {type = "Listening to";}
         else if (statusArr[index].type == 3) {type = "Watching";}
         obj.channel.createMessage("Removing `" + type + " " + statusArr[index].name + "`.")
         statusArr.splice(index);
@@ -131,7 +131,7 @@ module.exports.actions = function (type, cmd, body, obj) {
         while (number < settings.get("status").length) {
           if (settings.get("status")[number].type == 0) {type = "Playing";}
           else if (settings.get("status")[number].type == 1) {type = "Streaming";}
-          else if (settings.get("status")[number].type == 2) {type = "Listening";}
+          else if (settings.get("status")[number].type == 2) {type = "Listening to";}
           else if (settings.get("status")[number].type == 3) {type = "Watching";}
           index = number+1;
           arr.push("`" + index + "` | " + type + " " + settings.get("status")[number].name);
