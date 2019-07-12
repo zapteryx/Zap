@@ -117,7 +117,7 @@ bot.on("messageCreate", (msg) => {
     cmd = text[0].substring(prefix.length);
     // If "body" is empty, just pass an empty string to module (if I leave this out, it'll pass a random value to the modules)
     if (!text[1]) {body = "";}
-    else {body = msg.content.substring(msg.content.indexOf(text[1]));}
+    else {body = msg.content.substring(text[0].length + 1);}
     // While loop to check which module to pass to
     number = 0;
     exists = false;
