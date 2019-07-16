@@ -186,7 +186,7 @@ bot.on("messageCreate", (msg) => {
         }
         // If everything was a-ok
         else {
-          module.actions("command", cmd, body, msg);
+          module.actions("command", cmd.toLowerCase(), body, msg);
         }
       }
     }, 5)
