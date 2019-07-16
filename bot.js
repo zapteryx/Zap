@@ -92,13 +92,13 @@ fs.readdir("modules", (err, files) => {
 
 bot.on("connect", (id) => {console.log("[Shards] Shard #" + id + " has initiated a connection.")})
 
-bot.on("hello", (trace, id) => {console.log("[Shards] Shard #" + id + " has received Hello from gateway."); bot.editStatus("idle", {name: "loading..."})})
+bot.on("hello", (trace, id) => {console.log("[Shards] Shard #" + id + " has received Hello from gateway.");})
 
-bot.on("ready", () => {console.log("[Shards] All shards are ready."); bot.editStatus(settings.get("presence"), {name: settings.get("status")[0].name, type: settings.get("status")[0].type});})
+bot.on("ready", () => {console.log("[Shards] All shards are ready."); bot.editStatus(settings.get("presence"));})
 
 bot.on("shardDisconnect", (error, id) => {console.log("[Shards] Shard #" + id + " has disconnected.")})
 
-bot.on("shardPreReady", (id) => {console.log("[Shards] Shard #" + id + " is now in pre-ready.")})
+bot.on("shardPreReady", (id) => {console.log("[Shards] Shard #" + id + " is now in pre-ready."); bot.editStatus("idle", {name: "loading..."})})
 
 bot.on("shardReady", (id) => {console.log("[Shards] Shard #" + id + " is now ready.")})
 
