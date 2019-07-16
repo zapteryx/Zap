@@ -42,8 +42,9 @@ module.exports.actions = function (type, cmd, body, obj) {
     }
   }
   else if (type == "command" && cmd == "prefix") {
+    split = body.split(" ");
     if (body != "" && body != settings.get("prefix")) {
-      data.set("guilds." + obj.member.guild.id + ".prefix", body);
+      data.set("guilds." + obj.member.guild.id + ".prefix", split[0]);
       obj.channel.createMessage("Changed the prefix for this guild to `" + body + "`.");
     }
     else {
