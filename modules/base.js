@@ -77,29 +77,30 @@ module.exports.actions = function (type, cmd, body, obj) {
     }, 5)
   }
   else if (cmd == "gprefix") {
-    settings.set("prefix", body);
-    obj.channel.createMessage("Changed the global default prefix to `" + body + "`.");
+    split = body.split(" ");
+    settings.set("prefix", split[0]);
+    obj.channel.createMessage("Changed the global default prefix to `" + split[0] + "`.");
   }
   else if (cmd == "presence") {
-    if (body != "online" && body != "idle" && body != "dnd" && body != "invisible") {
+    if (body.toLowerCase() != "online" && body.toLowerCase() != "idle" && body.toLowerCase() != "dnd" && body.toLowerCase() != "invisible") {
       settings.set("presence", "online");
       bot.editStatus("online");
       obj.channel.createMessage("Reset the presence to `online`.");
     }
     else {
-      settings.set("presence", body);
-      bot.editStatus(body);
-      obj.channel.createMessage("Set the presence to `" + body + "`.");
+      settings.set("presence", body.toLowerCase());
+      bot.editStatus(body.toLowerCase());
+      obj.channel.createMessage("Set the presence to `" + body.toLowerCase() + "`.");
     }
   }
   else if (cmd == "status") {
     split = body.split(" ");
-    if (split[0] != "add" && split[0] != "remove" && split[0] != "list") {obj.channel.createMessage("Try specifying the action first.\nValid actions are `add type name`, `remove index`, `list`")}
-    if (split[0] == "add") {
-      if (split[1] == "playing") {status = 0;}
-      else if (split[1] == "streaming") {status = 1;}
-      else if (split[1] == "listening") {status = 2;}
-      else if (split[1] == "watching") {status = 3;}
+    if (split[0].toLowerCase() != "add" && split[0].toLowerCase() != "remove" && split[0].toLowerCase() != "list") {obj.channel.createMessage("Try specifying the action first.\nValid actions are `add type name`, `remove index`, `list`")}
+    else if (split[0].toLowerCase() == "add") {
+      if (split[1].toLowerCase() == "playing") {status = 0;}
+      else if (split[1].toLowerCase() == "streaming") {status = 1;}
+      else if (split[1].toLowerCase() == "listening") {status = 2;}
+      else if (split[1].toLowerCase() == "watching") {status = 3;}
       else {
         obj.channel.createMessage("You have specified an invalid type.\nValid types: `playing`, `streaming`, `listening`, `watching`");
         status = -1;
@@ -109,14 +110,14 @@ module.exports.actions = function (type, cmd, body, obj) {
           arr = settings.get("status");
           arr.push({type: status, name: body.substring(split[0].length + split[1].length + 2)});
           settings.set("status", arr);
-          obj.channel.createMessage("Added `" + split[1] + " " + body.substring(split[0].length + split[1].length + 2) + "` to the rotation.");
+          obj.channel.createMessage("Added `" + split[1].toLowerCase() + " " + body.substring(split[0].length + split[1].length + 2) + "` to the rotation.");
         }
         else {
           obj.channel.createMessage("You didn't provide a game name.");
         }
       }
     }
-    else if (split[0] == "remove") {
+    else if (split[0].toLowerCase() == "remove") {
       if (parseInt(split[1], 10) > settings.get("status").length || parseInt(split[1], 10) < 1) {
         obj.channel.createMessage("Invalid index. Try using `status list` to find the status you want to remove.");
       }
@@ -132,7 +133,7 @@ module.exports.actions = function (type, cmd, body, obj) {
         settings.set("status", statusArr);
       }
     }
-    else if (split[0] == "list") {
+    else if (split[0].toLowerCase() == "list") {
       number = 0;
       arr = [];
       if (settings.get("status").length == 0) {
