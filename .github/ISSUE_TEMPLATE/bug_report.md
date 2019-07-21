@@ -2,7 +2,7 @@
 name: Bug report
 about: Report something wrong.
 title: ''
-labels: 'bug, pending'
+labels: '1: bug, 2: pending'
 assignees: ''
 
 ---
