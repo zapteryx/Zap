@@ -14,8 +14,8 @@ function changeStatus() {
       split = string.split("{");
       number = 0;
       while (number < split.length) {
-        if (split[number].includes("usercount}")) {string = string.replace("{usercount}", bot.users.filter(function(){return true}).length);}
-        else if (split[number].includes("guildcount}")) {string = string.replace("{guildcount}", bot.guilds.filter(function(){return true}).length);}
+        if (split[number].includes("usercount}")) {string = string.replace("{usercount}", bot.users.size);}
+        else if (split[number].includes("guildcount}")) {string = string.replace("{guildcount}", bot.guilds.size);}
         number++;
       }
     }
