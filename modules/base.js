@@ -20,7 +20,8 @@ function changeStatus() {
       }
     }
     else {string = settings.get("status")[statusIndex].name;}
-    bot.editStatus(null, {name: string, type: settings.get("status")[statusIndex].type, url: "https://twitch.tv/twitch/"})
+    if (!settings.get("presence")) {bot.editStatus("online", {name: string, type: settings.get("status")[statusIndex].type, url: "https://twitch.tv/twitch/"})}
+    else {bot.editStatus(settings.get("presence"), {name: string, type: settings.get("status")[statusIndex].type, url: "https://twitch.tv/twitch/"})}
     statusIndex++;
   }
   else {
