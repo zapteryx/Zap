@@ -25,7 +25,7 @@ function changeStatus() {
     statusIndex++;
   }
   else {
-    bot.editStatus(null, null);
+    if (settings.get("presence")) {bot.editStatus(settings.get("presence"))}
   }
 }
 
