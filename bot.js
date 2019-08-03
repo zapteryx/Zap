@@ -195,7 +195,7 @@ bot.on("messageCreate", (msg) => {
               title: "Bypassed permission check",
               description: "Missing " + str + ": " + permsMissing.join(", "),
               footer: {
-                text: tag(msg.author) + " | Automatically bypassed due to manager permission",
+                text: tag(msg.author) + " | Manager bypass",
                 icon_url: msg.author.avatarURL
               },
               color: 0x00FF00
