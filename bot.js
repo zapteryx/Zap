@@ -69,6 +69,9 @@ function getBar(progress) {
 function tag(user) {
   return user.username + "#" + user.discriminator;
 }
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
 var mArr = [];
 module.exports.mArr = mArr;
 module.exports.settings = settings;
@@ -77,6 +80,7 @@ module.exports.roundTo = roundTo;
 module.exports.msToTime = msToTime;
 module.exports.getRndInteger = getRndInteger;
 module.exports.tag = tag;
+module.exports.isNumeric = isNumeric;
 module.exports.bot = bot;
 fs.readdir("modules", (err, files) => {
   number = 0;
@@ -175,7 +179,7 @@ bot.on("messageCreate", (msg) => {
           })
         }
         // If a permission is missing
-        else if (permsMissing.length > 0) {
+        else if (permsMissing.length > 0 && !settings.get("managers").includes(msg.author.id)) {
           msg.channel.createMessage({
             embed: {
               title: "No permission",
@@ -186,6 +190,17 @@ bot.on("messageCreate", (msg) => {
         }
         // If everything was a-ok
         else {
+          if (permsMissing.length > 0 && settings.get("managers").includes(msg.author.id)) {msg.channel.createMessage({
+            embed: {
+              title: "Bypassed permission check",
+              description: "Missing " + str + ": " + permsMissing.join(", "),
+              footer: {
+                text: tag(msg.author) + " | Automatically bypassed due to manager permission",
+                icon_url: msg.author.avatarURL
+              },
+              color: 0x00FF00
+            }
+          });}
           module.actions("command", cmd.toLowerCase(), body, msg);
         }
       }
