@@ -118,9 +118,10 @@ module.exports.actions = function (type, cmd, body, obj) {
     else if (cmd == "kick") {
       if (body == "") {obj.channel.createMessage("Please specify the user to kick.")}
       else {
+        id = "";
         if (obj.mentions.length >= 1 && text[0] == obj.mentions[0].mention) {id = obj.mentions[0].id}
         else if (isNumeric(text[0])) {id = text[0]}
-        if (!id) {obj.channel.createMessage("Usernames are currently not supported. Please specify an ID or mention the user to kick.");}
+        if (id == "") {obj.channel.createMessage("Usernames are currently not supported. Please specify an ID or mention the user to kick.");}
         else if (!obj.member.guild.members.get(bot.user.id).permission.has("kickMembers")) {obj.channel.createMessage("I'm lacking permissions to kick members.")}
         else {
           text = body.split(" ");
@@ -135,9 +136,10 @@ module.exports.actions = function (type, cmd, body, obj) {
     else if (cmd == "ban") {
       if (body == "") {obj.channel.createMessage("Please specify the user to ban.")}
       else {
+        id = "";
         if (obj.mentions.length >= 1 && text[0] == obj.mentions[0].mention) {id = obj.mentions[0].id}
         else if (isNumeric(text[0])) {id = text[0]}
-        if (!id) {obj.channel.createMessage("Usernames are currently not supported. Please specify an ID or mention the user to ban.");}
+        if (id == "") {obj.channel.createMessage("Usernames are currently not supported. Please specify an ID or mention the user to ban.");}
         else if (!obj.member.guild.members.get(bot.user.id).permission.has("banMembers")) {obj.channel.createMessage("I'm lacking permissions to ban members.")}
         else {
           text = body.split(" ");
