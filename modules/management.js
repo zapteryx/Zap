@@ -116,7 +116,7 @@ module.exports.actions = function (type, cmd, body, obj) {
       else {obj.channel.createMessage("Please specify what action you would like to do.\nValid actions: `add`, `remove`, `list`");}
     }
     else if (cmd == "kick") {
-      if (!body) {obj.channel.createMessage("Please specify the user to kick.")}
+      if (body == "") {obj.channel.createMessage("Please specify the user to kick.")}
       else if (obj.mentions.length >= 1 && text[0] == obj.mentions[0].mention) {id = obj.mentions[0].id}
       else if (isNumeric(text[0])) {id = text[0]}
       if (!id) {obj.channel.createMessage("Usernames are currently not supported. Please specify an ID or mention the user to kick.");}
@@ -131,7 +131,7 @@ module.exports.actions = function (type, cmd, body, obj) {
       }
     }
     else if (cmd == "ban") {
-      if (!body) {obj.channel.createMessage("Please specify the user to ban.")}
+      if (body == "") {obj.channel.createMessage("Please specify the user to ban.")}
       else if (obj.mentions.length >= 1 && text[0] == obj.mentions[0].mention) {id = obj.mentions[0].id}
       else if (isNumeric(text[0])) {id = text[0]}
       if (!id) {obj.channel.createMessage("Usernames are currently not supported. Please specify an ID or mention the user to ban.");}
