@@ -1,8 +1,9 @@
 var bot = require("../bot.js").bot;
 var settings = require("../bot.js").settings;
 var data = require("../bot.js").data;
+isNumeric = require("../bot.js").isNumeric;
 
-module.exports.commands = [{cmd: "prefix", desc: "Change the guild prefix.", perm: ["manageGuild"]}, {cmd: "mentionrole", desc: "Mention a role, regardless mentionable or not.", perm: ["mentionEveryone"]}, {cmd: "mrole", desc: "Alias to `mentionrole`", perm: ["mentionEveryone"]}, {cmd: "autorole", desc: "Manage autorole.", perm: ["manageGuild", "manageRoles"]}];
+module.exports.commands = [{cmd: "prefix", desc: "Change the guild prefix.", perm: ["manageGuild"]}, {cmd: "mentionrole", desc: "Mention a role, regardless mentionable or not.", perm: ["mentionEveryone"]}, {cmd: "mrole", desc: "Alias to `mentionrole`", perm: ["mentionEveryone"]}, {cmd: "autorole", desc: "Manage autorole.", perm: ["manageGuild", "manageRoles"]}, {cmd: "kick", desc: "Kick a user.", perm: ["kickMembers"]}, {cmd: "ban", desc: "Ban a user.", perm: ["banMembers"]}];
 module.exports.events = ["guildMemberAdd"];
 module.exports.actions = function (type, cmd, body, obj) {
   if (type == "command") {
@@ -78,7 +79,7 @@ module.exports.actions = function (type, cmd, body, obj) {
       }
       else if (text[0].toLowerCase() == "remove") {
         if (!data.get("guilds." + obj.member.guild.id + ".autorole")) {autorole = []; data.set("guilds." + obj.member.guild.id + ".autorole", autorole);}
-        if (parseInt(text[1], 10) > data.get("guilds." + obj.member.guild.id + ".autorole").length || parseInt(text[1], 10) < 1 || parseInt(text[1], 10) != parseInt(text[1], 10)) {
+        if (parseInt(text[1], 10) > data.get("guilds." + obj.member.guild.id + ".autorole").length || parseInt(text[1], 10) < 1 || isNaN(parseInt(text[1], 10))) {
           obj.channel.createMessage("Invalid index. Try using `autorole list` to find the role you want to remove.");
         }
         else {
@@ -113,6 +114,34 @@ module.exports.actions = function (type, cmd, body, obj) {
         }
       }
       else {obj.channel.createMessage("Please specify what action you would like to do.\nValid actions: `add`, `remove`, `list`");}
+    }
+    else if (cmd == "kick") {
+      if (obj.mentions.length >= 1 && text[0] == obj.mentions[0].mention) {id = obj.mentions[0].id}
+      else if (isNumeric(text[0])) {id = text[0]}
+      if (!id) {obj.channel.createMessage("Usernames are currently not supported. Please specify an ID or mention the user to kick.");}
+      else if (!obj.member.guild.members.get(bot.user.id).permission.has("kickMembers")) {obj.channel.createMessage("I'm lacking permissions to kick members.")}
+      else {
+        text = body.split(" ");
+        if (!text[1]) {reason = "No reason provided."}
+        else {reason = body.substring(text[0].length + 1);}
+        obj.member.guild.kickMember(id, "[" + obj.author.id + "] " + reason).then(() => obj.channel.createMessage("✅ <@" + id + "> has been kicked!")).catch(function(err) {
+          obj.channel.createMessage("❌ Encountered an error while attempting to kick the user:\n```" + err + "```")
+        })
+      }
+    }
+    else if (cmd == "ban") {
+      if (obj.mentions.length >= 1 && text[0] == obj.mentions[0].mention) {id = obj.mentions[0].id}
+      else if (isNumeric(text[0])) {id = text[0]}
+      if (!id) {obj.channel.createMessage("Usernames are currently not supported. Please specify an ID or mention the user to ban.");}
+      else if (!obj.member.guild.members.get(bot.user.id).permission.has("banMembers")) {obj.channel.createMessage("I'm lacking permissions to ban members.")}
+      else {
+        text = body.split(" ");
+        if (!text[1]) {reason = "No reason provided."}
+        else {reason = body.substring(text[0].length + 1);}
+        obj.member.guild.banMember(id, 1, "[" + obj.author.id + "] " + reason).then(() => obj.channel.createMessage("✅ <@" + id + "> has been banned!")).catch(function(err) {
+          obj.channel.createMessage("❌ Encountered an error while attempting to ban the user:\n```" + err + "```")
+        })
+      }
     }
   }
   else if (type == "guildMemberAdd") {
