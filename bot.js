@@ -122,89 +122,82 @@ bot.on("messageCreate", (msg) => {
     // If "body" is empty, just pass an empty string to module (if I leave this out, it'll pass a random value to the modules)
     if (!text[1]) {body = "";}
     else {body = msg.content.substring(text[0].length + 1);}
-    // While loop to check which module to pass to
-    number = 0;
+    // Loop to check which module to pass to
     exists = false;
-    while (number < mArr.length) {
-      if (mArr[number].commands.some(e => e.cmd === cmd)) {exists = true; module = mArr[number]; number = mArr.length;}
-      else {number++;}
-    }
-    // Wait 5ms to allow time for the while loop to finish
-    setTimeout(function() {
-      // If the module exists and the user did not just type a non-existent command
-      if (exists) {
-        // Log
-        if (!msg.member) {console.log("[Modules] " + tag(msg.author) + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")}
-        else {console.log("[Modules] " + tag(msg.author) + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + " in guild " + msg.member.guild.name + " (" + msg.member.guild.id + ").")}
-        // Respect DM only first
-        if (module.commands.find(function (cmds) {return cmds.cmd == cmd;}).perm.includes("dmOnly")) {
-          // No other permissions matter because DMs don't have permissions
-          permsNeeded = ["dmOnly"];
-        }
-        // Has permissions but no DM only, which means that it's guild only
-        else if (module.commands.find(function (cmds) {return cmds.cmd == cmd;}).perm.length > 0) {
-          permsNeeded = module.commands.find(function (cmds) {return cmds.cmd == cmd;}).perm;
-        }
-        // Allow both DM and guild (no permissions)
-        else {
-          permsNeeded = [];
-        }
-        // Initialize perms missing array
-        permsMissing = [];
-        // Failed DM only requirement
-        if (permsNeeded.includes("dmOnly") && msg.member) {permsMissing.push("`dmOnly`");}
-        // Failed guild only requirement (either through manually specifying guildOnly or through specifying other permissions)
-        else if (permsNeeded.length > 0 && !msg.member) {permsMissing.push("`guildOnly`");}
-        // Not a DM and is a guild
-        else if (permsNeeded.length > 0 && msg.member) {
-          number = 0;
-          // While loop to check if user has all required permissions
-          while (number < permsNeeded.length) {
-            if (!msg.member.permission.has(permsNeeded[number])) {permsMissing.push("`" + permsNeeded[number] + "`");}
-            number++;
-          }
-        }
-        // No permissions specified, no need to do anything as permsMissing is still an empty array and nothing was changed
-        // Make the response seem less robotic by adding an s if it's more than 1 and what not
-        if (permsMissing.length == 1) {str = "permission";}
-        else {str = "permissions";}
-        // If module is manager only and the user is not a manager
-        if (module.managersOnly && !settings.get("managers").includes(msg.author.id)) {
-          msg.channel.createMessage({
-            embed: {
-              title: "No permission",
-              description: "This command is restricted to bot managers only.",
-              color: 0xFF0000
-            }
-          })
-        }
-        // If a permission is missing
-        else if (permsMissing.length > 0 && !settings.get("managers").includes(msg.author.id)) {
-          msg.channel.createMessage({
-            embed: {
-              title: "No permission",
-              description: "You are missing the " + permsMissing.join(", ") + " " + str + ".",
-              color: 0xFF0000
-            }
-          })
-        }
-        // If everything was a-ok
-        else {
-          if (permsMissing.length > 0 && settings.get("managers").includes(msg.author.id)) {msg.channel.createMessage({
-            embed: {
-              title: "Bypassed permission check",
-              description: "Missing " + str + ": " + permsMissing.join(", "),
-              footer: {
-                text: tag(msg.author) + " | Manager bypass",
-                icon_url: msg.author.avatarURL
-              },
-              color: 0x00FF00
-            }
-          });}
-          module.actions("command", cmd.toLowerCase(), body, msg);
+    mArr.forEach(function(e){if (e.commands.some(a => a.cmd === cmd)) {exists = true; module = e;}})
+    // If the module exists and the user did not just type a non-existent command
+    if (exists) {
+      // Log
+      if (!msg.member) {console.log("[Modules] " + tag(msg.author) + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + ".")}
+      else {console.log("[Modules] " + tag(msg.author) + " (" + msg.author.id + ") triggered the " + module.name + " module by command " + cmd + " in guild " + msg.member.guild.name + " (" + msg.member.guild.id + ").")}
+      // Respect DM only first
+      if (module.commands.find(function (cmds) {return cmds.cmd == cmd;}).perm.includes("dmOnly")) {
+        // No other permissions matter because DMs don't have permissions
+        permsNeeded = ["dmOnly"];
+      }
+      // Has permissions but no DM only, which means that it's guild only
+      else if (module.commands.find(function (cmds) {return cmds.cmd == cmd;}).perm.length > 0) {
+        permsNeeded = module.commands.find(function (cmds) {return cmds.cmd == cmd;}).perm;
+      }
+      // Allow both DM and guild (no permissions)
+      else {
+        permsNeeded = [];
+      }
+      // Initialize perms missing array
+      permsMissing = [];
+      // Failed DM only requirement
+      if (permsNeeded.includes("dmOnly") && msg.member) {permsMissing.push("`dmOnly`");}
+      // Failed guild only requirement (either through manually specifying guildOnly or through specifying other permissions)
+      else if (permsNeeded.length > 0 && !msg.member) {permsMissing.push("`guildOnly`");}
+      // Not a DM and is a guild
+      else if (permsNeeded.length > 0 && msg.member) {
+        number = 0;
+        // While loop to check if user has all required permissions
+        while (number < permsNeeded.length) {
+          if (!msg.member.permission.has(permsNeeded[number])) {permsMissing.push("`" + permsNeeded[number] + "`");}
+          number++;
         }
       }
-    }, 5)
+      // No permissions specified, no need to do anything as permsMissing is still an empty array and nothing was changed
+      // Make the response seem less robotic by adding an s if it's more than 1 and what not
+      if (permsMissing.length == 1) {str = "permission";}
+      else {str = "permissions";}
+      // If module is manager only and the user is not a manager
+      if (module.managersOnly && !settings.get("managers").includes(msg.author.id)) {
+        msg.channel.createMessage({
+          embed: {
+            title: "No permission",
+            description: "This command is restricted to bot managers only.",
+            color: 0xFF0000
+          }
+        })
+      }
+      // If a permission is missing
+      else if (permsMissing.length > 0 && !settings.get("managers").includes(msg.author.id)) {
+        msg.channel.createMessage({
+          embed: {
+            title: "No permission",
+            description: "You are missing the " + permsMissing.join(", ") + " " + str + ".",
+            color: 0xFF0000
+          }
+        })
+      }
+      // If everything was a-ok
+      else {
+        if (permsMissing.length > 0 && settings.get("managers").includes(msg.author.id)) {msg.channel.createMessage({
+          embed: {
+            title: "Bypassed permission check",
+            description: "Missing " + str + ": " + permsMissing.join(", "),
+            footer: {
+              text: tag(msg.author) + " | Manager bypass",
+              icon_url: msg.author.avatarURL
+            },
+            color: 0x00FF00
+          }
+        });}
+        module.actions("command", cmd.toLowerCase(), body, msg);
+      }
+    }
   }
   number = 0;
   while (number < mArr.length) {
