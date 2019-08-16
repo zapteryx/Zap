@@ -148,7 +148,7 @@ bot.on("messageCreate", (msg) => {
       // Failed DM only requirement
       if (permsNeeded.includes("dmOnly") && msg.member) {permsMissing.push("`dmOnly`");}
       // Failed guild only requirement (either through manually specifying guildOnly or through specifying other permissions)
-      else if (permsNeeded.length > 0 && !msg.member) {permsMissing.push("`guildOnly`");}
+      else if (permsNeeded.length > 0 && typeof msg.member == "undefined") {permsMissing.push("`guildOnly`");}
       // Not a DM and is a guild
       else if (permsNeeded.length > 0 && msg.member) {
         number = 0;
