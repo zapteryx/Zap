@@ -154,7 +154,7 @@ bot.on("messageCreate", (msg) => {
         number = 0;
         // While loop to check if user has all required permissions
         while (number < permsNeeded.length) {
-          if (!msg.member.permission.has(permsNeeded[number])) {permsMissing.push("`" + permsNeeded[number] + "`");}
+          if (permsNeeded[number] != "guildOnly" && !msg.member.permission.has(permsNeeded[number])) {permsMissing.push("`" + permsNeeded[number] + "`");}
           number++;
         }
       }
