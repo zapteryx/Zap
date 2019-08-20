@@ -19,7 +19,8 @@ module.exports.actions = function (type, cmd, body, obj) {
         to = a[1];
       }
       else {from = "auto"; to = split[0];}
-      translate(body.substring(split[0].length + 1), {from: from, to: to})
+      content = body.substring(split[0].length + 1);
+      translate(content, {from: from, to: to})
       .then(function(res) {
         if (res.from.text.autoCorrected) {
           obj.channel.createMessage({
@@ -47,7 +48,7 @@ module.exports.actions = function (type, cmd, body, obj) {
               fields: [
                 {
                   name: "Original [" + res.from.language.iso + "]",
-                  value: body.substring(split[0].length + 1)
+                  value: content
                 },
                 {
                   name: "Did you mean...",
@@ -69,7 +70,7 @@ module.exports.actions = function (type, cmd, body, obj) {
               fields: [
                 {
                   name: "Original [" + res.from.language.iso + "]",
-                  value: body.substring(split[0].length + 1)
+                  value: content
                 },
                 {
                   name: "Translated",
