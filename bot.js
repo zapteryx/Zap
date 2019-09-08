@@ -115,8 +115,8 @@ bot.on("messageCreate", (msg) => {
   if (!msg.member || typeof data.get("guilds." + msg.member.guild.id + ".prefix") === "undefined") {prefix = settings.get("prefix");}
   // If the message is in a guild with a guild prefix
   else {prefix = data.get("guilds." + msg.member.guild.id + ".prefix")}
-  // If message contains specified prefix
-  if (text[0].startsWith(prefix)) {
+  // If message contains specified prefix and user is not a bot
+  if (text[0].startsWith(prefix) && !msg.author.bot) {
     // Prepare command and body for passing to module
     cmd = text[0].substring(prefix.length);
     // If "body" is empty, just pass an empty string to module (if I leave this out, it'll pass a random value to the modules)

@@ -17,9 +17,7 @@
 A customizable modular all-in-one Discord bot.
 
 ## Getting Started
-There is currently no public instance of Zap being hosted. However, you may visit our Discord server using the button above to see it in action.
-
-Since there isn't a public instance of Zap, you'll have to host it by yourself.
+Zap is publicly available at https://s.zptx.icu/zap.
 
 ## Self-Hosting
 Zap can be easily self-hosted for use by anyone.
