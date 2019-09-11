@@ -36,7 +36,8 @@ module.exports.actions = function (type, cmd, body, obj) {
     try {
       evaled = eval(body);
       if (typeof evaled !== "string") {evaled = require("util").inspect(evaled);}
-      obj.channel.createMessage("**Success!** Output:\n```js\n" + evaled + "```");
+      if (evaled.length < 1979) {obj.channel.createMessage("**Success!** Output:\n```js\n" + evaled + "```");}
+      else {console.log(evaled); obj.channel.createMessage("**Success!** Output was logged to console as it exceeds Discord's character limit.");}
     }
     catch (err) {obj.channel.createMessage("**Error!** Output:\n```js\n" + err + "```");}
   }
