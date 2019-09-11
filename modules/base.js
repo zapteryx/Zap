@@ -33,8 +33,12 @@ module.exports.commands = [{cmd: "presence", desc: "Change the bot's presence (o
 module.exports.events = ["guildCreate", "guildDelete"];
 module.exports.actions = function (type, cmd, body, obj) {
   if (cmd == "eval") {
-    try {evaled = eval(body).toString(); obj.channel.createMessage("**Success!** Output:\n```js\n" + evaled + "```");}
-    catch (err) {obj.channel.createMessage("**Error!** Output:\n```js\n" + err.toString() + "```");}
+    try {
+      evaled = eval(body);
+      if (typeof evaled !== "string") {evaled = require("util").inspect(evaled);}
+      obj.channel.createMessage("**Success!** Output:\n```js\n" + evaled + "```");
+    }
+    catch (err) {obj.channel.createMessage("**Error!** Output:\n```js\n" + err + "```");}
   }
   else if (cmd == "load") {
     number = 0;
