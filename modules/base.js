@@ -12,9 +12,13 @@ function changeStatus() {
     if (settings.get("status")[statusIndex].name.includes("{")) {
       string = settings.get("status")[statusIndex].name;
       split = string.split("{");
+      n = 0;
+      counts = bot.guilds.map(g => g.memberCount);
+      total = 0;
+      while (n < counts.length) {total = total + counts[n]; n++;}
       number = 0;
       while (number < split.length) {
-        if (split[number].includes("usercount}")) {string = string.replace("{usercount}", bot.users.size);}
+        if (split[number].includes("usercount}")) {string = string.replace("{usercount}", total);}
         else if (split[number].includes("guildcount}")) {string = string.replace("{guildcount}", bot.guilds.size);}
         number++;
       }
