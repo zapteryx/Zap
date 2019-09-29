@@ -12,16 +12,12 @@ function changeStatus() {
     if (settings.get("status")[statusIndex].name.includes("{")) {
       string = settings.get("status")[statusIndex].name;
       split = string.split("{");
-      n = 0;
-      counts = bot.guilds.map(g => g.memberCount);
       total = 0;
-      while (n < counts.length) {total = total + counts[n]; n++;}
-      number = 0;
-      while (number < split.length) {
-        if (split[number].includes("usercount}")) {string = string.replace("{usercount}", total);}
-        else if (split[number].includes("guildcount}")) {string = string.replace("{guildcount}", bot.guilds.size);}
-        number++;
-      }
+      bot.guilds.map(g => g.memberCount).forEach(a => total = total + a);
+      split.forEach((a, i) => {
+        if (a.includes("usercount}")) {string = string.replace("{usercount}", total);}
+        else if (a.includes("guildcount}")) {string = string.replace("{guildcount}", bot.guilds.size);}
+      });
     }
     else {string = settings.get("status")[statusIndex].name;}
     if (!settings.get("presence")) {bot.editStatus("online", {name: string, type: settings.get("status")[statusIndex].type, url: "https://twitch.tv/twitch/"})}
@@ -150,18 +146,15 @@ module.exports.actions = function (type, cmd, body, obj) {
         obj.channel.createMessage("There were no statuses found.")
       }
       else {
-        while (number < settings.get("status").length) {
-          if (settings.get("status")[number].type == 0) {type = "Playing";}
-          else if (settings.get("status")[number].type == 1) {type = "Streaming";}
-          else if (settings.get("status")[number].type == 2) {type = "Listening to";}
-          else if (settings.get("status")[number].type == 3) {type = "Watching";}
-          index = number+1;
-          arr.push("`" + index + "` | " + type + " " + settings.get("status")[number].name);
-          number++;
-        }
-        setTimeout(function() {
-          obj.channel.createMessage("Cycling through " + settings.get("status").length + " statuses:\n" + arr.join("\n"))
-        }, 5)
+        settings.get("status").forEach((a, i) => {
+          if (a.type == 0) {type = "Playing";}
+          else if (a.type == 1) {type = "Streaming";}
+          else if (a.type == 2) {type = "Listening to";}
+          else if (a.type == 3) {type = "Watching";}
+          index = i+1;
+          arr.push("`" + index + "` | " + type + " " + a.name);
+        });
+        obj.channel.createMessage("Cycling through " + settings.get("status").length + " statuses:\n" + arr.join("\n"));
       }
     }
   }
