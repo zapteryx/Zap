@@ -202,8 +202,14 @@ module.exports.actions = function (type, cmd, body, obj) {
         if (roleId != "") {
           selfrole = data.get("guilds." + obj.member.guild.id + ".selfrole");
           if (selfrole.find(function(a) {return a == roleId;}) == roleId) {
-            if (obj.member.roles.includes(roleId)) {obj.member.removeRole(roleId, "[Selfrole] Removed role");}
-            else {obj.member.addRole(roleId, "[Selfrole] Added role");}
+            if (obj.member.roles.includes(roleId)) {
+              obj.member.removeRole(roleId, "[Selfrole] Removed role");
+              obj.channel.createMessage("Removed the role!");
+            }
+            else {
+              obj.member.addRole(roleId, "[Selfrole] Added role");
+              obj.channel.createMessage("Added the role!");
+            }
           }
           else {obj.channel.createMessage("That role is not available for selfrole!");}
         }
