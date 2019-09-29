@@ -1,6 +1,7 @@
 var bot = require("../bot.js").bot;
 var settings = require("../bot.js").settings;
 var data = require("../bot.js").data;
+var profiles = require("../bot.js").profiles;
 isNumeric = require("../bot.js").isNumeric;
 
 module.exports.commands = [{cmd: "prefix", desc: "Change the guild prefix.", perm: ["manageGuild"]}, {cmd: "mentionrole", desc: "Mention a role, regardless mentionable or not.", perm: ["mentionEveryone"]}, {cmd: "mrole", desc: "Alias to `mentionrole`", perm: ["mentionEveryone"]}, {cmd: "autorole", desc: "Manage autorole.", perm: ["manageGuild", "manageRoles"]}, {cmd: "selfrole", desc: "Manage selfrole.", perm: ["manageGuild", "manageRoles"]}, {cmd: "getrole", desc: "Get a selfrole.", perm: ["guildOnly"]}, {cmd: "kick", desc: "Kick a user.", perm: ["kickMembers"]}, {cmd: "ban", desc: "Ban a user.", perm: ["banMembers"]}];
@@ -55,6 +56,7 @@ module.exports.actions = function (type, cmd, body, obj) {
     }
     else if (cmd == "autorole") {
       if (text[0].toLowerCase() == "add") {
+        text[1] = body.slice(text[0].length + 1);
         if (!text[1]) {obj.channel.createMessage("Please specify the role to add.\nValid role formats: `602110731156062208`, `Member`");}
         else {
           roleId = "";
@@ -113,6 +115,7 @@ module.exports.actions = function (type, cmd, body, obj) {
     }
     else if (cmd == "selfrole") {
       if (text[0].toLowerCase() == "add") {
+        text[1] = body.slice(text[0].length + 1);
         if (!text[1]) {obj.channel.createMessage("Please specify the role to add.\nValid role formats: `602110731156062208`, `Member`");}
         else {
           roleId = "";
@@ -157,7 +160,7 @@ module.exports.actions = function (type, cmd, body, obj) {
           obj.channel.createMessage("There were no roles found in use for selfrole.");
         }
         else {
-          data.get("guilds." + obj.member.guild.id + ".selfrole").length).forEach((a, i) => {
+          data.get("guilds." + obj.member.guild.id + ".selfrole").forEach((a, i) => {
             index = i+1;
             try {roleName = obj.member.guild.roles.get(a).name;}
             catch (e) {roleName = "~~Missing Role~~";}
@@ -170,14 +173,14 @@ module.exports.actions = function (type, cmd, body, obj) {
       else {obj.channel.createMessage("Please specify what action you would like to do.\nValid actions: `add`, `remove`, `list`");}
     }
     else if (cmd == "getrole") {
-      if (!text[1]) {
+      if (!body) {
         arr = [];
         if (!data.get("guilds." + obj.member.guild.id + ".selfrole")) {selfrole = []; data.set("guilds." + obj.member.guild.id + ".selfrole", selfrole);}
         if (data.get("guilds." + obj.member.guild.id + ".selfrole").length == 0) {
           obj.channel.createMessage("No roles available for selfrole.");
         }
         else {
-          data.get("guilds." + obj.member.guild.id + ".selfrole").length).forEach((a, i) => {
+          data.get("guilds." + obj.member.guild.id + ".selfrole").forEach((a, i) => {
             index = i+1;
             try {roleName = obj.member.guild.roles.get(a).name;}
             catch (e) {roleName = "~~Missing Role~~";}
@@ -190,10 +193,10 @@ module.exports.actions = function (type, cmd, body, obj) {
       else {
         roleId = "";
         if (!data.get("guilds." + obj.member.guild.id + ".selfrole")) {obj.channel.createMessage("No roles are available for selfrole.");}
-        if (!obj.member.guild.roles.map((role) => role.name).includes(text[1]) && !obj.member.guild.roles.map((role) => role.id).includes(text[1])) {obj.channel.createMessage("I couldn't find the role you were looking for. Names are usually case-sensitive.");}
-        else if (obj.member.guild.roles.map((role) => role.id).includes(text[1])) {roleId = text[1];}
+        if (!obj.member.guild.roles.map((role) => role.name).includes(body) && !obj.member.guild.roles.map((role) => role.id).includes(body)) {obj.channel.createMessage("I couldn't find the role you were looking for. Names are usually case-sensitive.");}
+        else if (obj.member.guild.roles.map((role) => role.id).includes(body)) {roleId = body;}
         else {
-          o = obj.member.guild.roles.find(function(role) {if (role.name == text[1]) {return role;}})
+          o = obj.member.guild.roles.find(function(role) {if (role.name == body) {return role;}})
           roleId = o.id;
         }
         if (roleId != "") {
@@ -252,6 +255,7 @@ module.exports.actions = function (type, cmd, body, obj) {
       });
     }
   }
+  else if (type == "guildDelete") {profiles.del(obj.id); data.del("guilds." + obj.id); data.del("music." + obj.id); data.del("counting." + obj.id);}
 }
 module.exports.managersOnly = false;
 module.exports.name = "management";
