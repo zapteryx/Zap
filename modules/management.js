@@ -167,7 +167,7 @@ module.exports.actions = function (type, cmd, body, obj) {
             roleId = data.get("guilds." + obj.member.guild.id + ".selfrole")[i];
             arr.push("`" + index + "` | " + roleName + " `" + roleId + "`");
           });
-          obj.channel.createMessage("Allowing users to `" + settings.get("prefix") + "getrole` the following roles:\n" + arr.join("\n"));
+          obj.channel.createMessage("Allowing users to `" + require("../bot.js").getPrefix(obj.channel) + "getrole` the following roles:\n" + arr.join("\n"));
         }
       }
       else {obj.channel.createMessage("Please specify what action you would like to do.\nValid actions: `add`, `remove`, `list`");}

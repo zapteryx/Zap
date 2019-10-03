@@ -30,7 +30,7 @@ function changeStatus() {
 }
 
 module.exports.commands = [{cmd: "presence", desc: "Change the bot's presence (online, idle, dnd, invisible).", perm: []}, {cmd: "status", desc: "Add or remove messages to the bot's playing status.", perm: []}, {cmd: "eval", desc: "Evaluates code.", perm: []}, {cmd: "load", desc: "Load an unloaded module.", perm: []}, {cmd: "reload", desc: "Reload a loaded module.", perm: []}, {cmd: "gprefix", desc: "Change the global default prefix.", perm: []}];
-module.exports.events = ["guildCreate", "guildDelete"];
+module.exports.events = ["guildCreate", "guildDelete", "messageCreate"];
 module.exports.actions = function (type, cmd, body, obj) {
   if (cmd == "eval") {
     try {
@@ -163,6 +163,9 @@ module.exports.actions = function (type, cmd, body, obj) {
   }
   else if (type == "guildDelete") {
     console.log("[Guilds] Left guild " + obj.name + " (" + obj.id + ") with " + obj.memberCount + " members.")
+  }
+  else if (type == "messageCreate") {
+    if (obj.mentions.length > 0 && obj.mentions[0].id == bot.user.id) {obj.channel.createMessage("My prefix here is `" + require("../bot.js").getPrefix(obj.channel) + "`.");}
   }
 }
 module.exports.managersOnly = true;
