@@ -107,7 +107,7 @@ bot.on("connect", (id) => {console.log("[Shards] Shard #" + id + " has initiated
 
 bot.on("hello", (trace, id) => {console.log("[Shards] Shard #" + id + " has received Hello from gateway.");})
 
-bot.on("ready", () => {console.log("[Shards] All shards are ready."); bot.editStatus(settings.get("presence"));})
+bot.on("ready", () => {console.log("[Shards] All shards are ready."); bot.editStatus(settings.get("presence")); bot.options.defaultImageFormat = "png";})
 
 bot.on("shardDisconnect", (error, id) => {console.log("[Shards] Shard #" + id + " has disconnected.")})
 
