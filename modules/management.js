@@ -227,7 +227,7 @@ module.exports.actions = function (type, cmd, body, obj) {
           text = body.split(" ");
           if (!text[1]) {reason = "No reason provided."}
           else {reason = body.substring(text[0].length + 1);}
-          obj.member.guild.kickMember(id, "[" + obj.author.id + "] " + reason).then(() => obj.channel.createMessage("✅ <@" + id + "> has been kicked!")).catch(function(err) {
+          obj.member.guild.kickMember(id, "[" + require("../bot.js").tag(obj.author) + "] " + reason).then(() => obj.channel.createMessage("✅ <@" + id + "> has been kicked!")).catch(function(err) {
             obj.channel.createMessage("❌ Encountered an error while attempting to kick the user:\n```" + err + "```")
           })
         }
@@ -245,7 +245,7 @@ module.exports.actions = function (type, cmd, body, obj) {
           text = body.split(" ");
           if (!text[1]) {reason = "No reason provided."}
           else {reason = body.substring(text[0].length + 1);}
-          obj.member.guild.banMember(id, 1, "[" + obj.author.id + "] " + reason).then(() => obj.channel.createMessage("✅ <@" + id + "> has been banned!")).catch(function(err) {
+          obj.member.guild.banMember(id, 1, "[" + require("../bot.js").tag(obj.author) + "] " + reason).then(() => obj.channel.createMessage("✅ <@" + id + "> has been banned!")).catch(function(err) {
             obj.channel.createMessage("❌ Encountered an error while attempting to ban the user:\n```" + err + "```")
           })
         }
