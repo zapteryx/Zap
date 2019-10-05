@@ -51,7 +51,7 @@ module.exports.actions = function (type, cmd, body, obj) {
           },
           {
             name: "Statistics",
-            value: "**RAM Usage**: " + roundedRam.toString() + " MB\n**Uptime**: " + msToTime(process.uptime() * 1000) + "\n**Servers**: " + bot.guilds.size + "\n**Users**: " + total + " (" + bot.users.size + " cached)\n**Channels**: " + ctotal
+            value: "**RAM Usage**: " + roundedRam.toString() + " MB\n**Uptime**: " + msToTime(process.uptime() * 1000) + "\n**Servers**: " + bot.guilds.size + "\n**Users**: " + total + " (" + bot.users.size + " cached)\n**Channels**: " + ctotal + "\n**Modules Loaded**: " + require("../bot.js").mArr.length
           }
         ]
       }
