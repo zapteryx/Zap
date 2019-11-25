@@ -72,6 +72,14 @@ function tag(user) {
 function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
+function getPrefix(channel) {
+  if (channel.type == 0) {
+    if (typeof data.get("guilds." + channel.guild.id + ".prefix") != "string") {return settings.get("prefix");}
+    else {return data.get("guilds." + channel.guild.id + ".prefix");}
+  }
+  else if (channel.type == 1) {return settings.get("prefix");}
+  else {return null;}
+}
 var mArr = [];
 module.exports.mArr = mArr;
 module.exports.settings = settings;
@@ -81,6 +89,7 @@ module.exports.msToTime = msToTime;
 module.exports.getRndInteger = getRndInteger;
 module.exports.tag = tag;
 module.exports.isNumeric = isNumeric;
+module.exports.getPrefix = getPrefix;
 module.exports.bot = bot;
 fs.readdir("modules", (err, files) => {
   number = 0;
@@ -90,7 +99,7 @@ fs.readdir("modules", (err, files) => {
     number++;
   }
   if (files.includes("base.js") == false) {
-    console.log("[Modules] Module base was not found. This can limit your module management abilities, which is the opposite of what the bot was made for. You can download the base module from GitHub at https://short.zptx.icu/zap.")
+    console.log("[Modules] Module base was not found. This can limit your module management abilities, which is the opposite of what the bot was made for. You can download the base module from GitHub at https://s.zptx.icu/zap.")
   }
 })
 
@@ -98,7 +107,7 @@ bot.on("connect", (id) => {console.log("[Shards] Shard #" + id + " has initiated
 
 bot.on("hello", (trace, id) => {console.log("[Shards] Shard #" + id + " has received Hello from gateway.");})
 
-bot.on("ready", () => {console.log("[Shards] All shards are ready."); bot.editStatus(settings.get("presence"));})
+bot.on("ready", () => {console.log("[Shards] All shards are ready."); bot.editStatus(settings.get("presence")); bot.options.defaultImageFormat = "png";})
 
 bot.on("shardDisconnect", (error, id) => {console.log("[Shards] Shard #" + id + " has disconnected.")})
 
@@ -111,10 +120,8 @@ bot.on("shardResume", (id) => {console.log("[Shards] Shard #" + id + " has resum
 // Received a new message
 bot.on("messageCreate", (msg) => {
   text = msg.content.split(" ");
-  // If the message is in a DM or there is no guild prefix set
-  if (!msg.member || typeof data.get("guilds." + msg.member.guild.id + ".prefix") === "undefined") {prefix = settings.get("prefix");}
-  // If the message is in a guild with a guild prefix
-  else {prefix = data.get("guilds." + msg.member.guild.id + ".prefix")}
+  // This function should basically replace the whole need for prefix checking
+  prefix = getPrefix(msg.channel);
   // If message contains specified prefix and user is not a bot
   if (text[0].startsWith(prefix) && !msg.author.bot) {
     // Prepare command and body for passing to module

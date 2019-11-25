@@ -12,12 +12,12 @@ function changeStatus() {
     if (settings.get("status")[statusIndex].name.includes("{")) {
       string = settings.get("status")[statusIndex].name;
       split = string.split("{");
-      number = 0;
-      while (number < split.length) {
-        if (split[number].includes("usercount}")) {string = string.replace("{usercount}", bot.users.size);}
-        else if (split[number].includes("guildcount}")) {string = string.replace("{guildcount}", bot.guilds.size);}
-        number++;
-      }
+      total = 0;
+      bot.guilds.map(g => g.memberCount).forEach(a => total = total + a);
+      split.forEach((a, i) => {
+        if (a.includes("usercount}")) {string = string.replace("{usercount}", total);}
+        else if (a.includes("guildcount}")) {string = string.replace("{guildcount}", bot.guilds.size);}
+      });
     }
     else {string = settings.get("status")[statusIndex].name;}
     if (!settings.get("presence")) {bot.editStatus("online", {name: string, type: settings.get("status")[statusIndex].type, url: "https://twitch.tv/twitch/"})}
@@ -25,12 +25,12 @@ function changeStatus() {
     statusIndex++;
   }
   else {
-    if (settings.get("presence")) {bot.editStatus(settings.get("presence"))}
+    if (settings.get("presence")) {bot.editStatus(settings.get("presence"), null);}
   }
 }
 
 module.exports.commands = [{cmd: "presence", desc: "Change the bot's presence (online, idle, dnd, invisible).", perm: []}, {cmd: "status", desc: "Add or remove messages to the bot's playing status.", perm: []}, {cmd: "eval", desc: "Evaluates code.", perm: []}, {cmd: "load", desc: "Load an unloaded module.", perm: []}, {cmd: "reload", desc: "Reload a loaded module.", perm: []}, {cmd: "gprefix", desc: "Change the global default prefix.", perm: []}];
-module.exports.events = ["guildCreate", "guildDelete"];
+module.exports.events = ["guildCreate", "guildDelete", "messageCreate"];
 module.exports.actions = function (type, cmd, body, obj) {
   if (cmd == "eval") {
     try {
@@ -146,18 +146,15 @@ module.exports.actions = function (type, cmd, body, obj) {
         obj.channel.createMessage("There were no statuses found.")
       }
       else {
-        while (number < settings.get("status").length) {
-          if (settings.get("status")[number].type == 0) {type = "Playing";}
-          else if (settings.get("status")[number].type == 1) {type = "Streaming";}
-          else if (settings.get("status")[number].type == 2) {type = "Listening to";}
-          else if (settings.get("status")[number].type == 3) {type = "Watching";}
-          index = number+1;
-          arr.push("`" + index + "` | " + type + " " + settings.get("status")[number].name);
-          number++;
-        }
-        setTimeout(function() {
-          obj.channel.createMessage("Cycling through " + settings.get("status").length + " statuses:\n" + arr.join("\n"))
-        }, 5)
+        settings.get("status").forEach((a, i) => {
+          if (a.type == 0) {type = "Playing";}
+          else if (a.type == 1) {type = "Streaming";}
+          else if (a.type == 2) {type = "Listening to";}
+          else if (a.type == 3) {type = "Watching";}
+          index = i+1;
+          arr.push("`" + index + "` | " + type + " " + a.name);
+        });
+        obj.channel.createMessage("Cycling through " + settings.get("status").length + " statuses:\n" + arr.join("\n"));
       }
     }
   }
@@ -166,6 +163,9 @@ module.exports.actions = function (type, cmd, body, obj) {
   }
   else if (type == "guildDelete") {
     console.log("[Guilds] Left guild " + obj.name + " (" + obj.id + ") with " + obj.memberCount + " members.")
+  }
+  else if (type == "messageCreate") {
+    if (obj.mentions.length > 0 && obj.mentions[0].id == bot.user.id) {obj.channel.createMessage("My prefix here is `" + require("../bot.js").getPrefix(obj.channel) + "`.");}
   }
 }
 module.exports.managersOnly = true;
