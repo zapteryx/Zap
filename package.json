@@ -5,7 +5,7 @@
   "main": "bot.js",
   "dependencies": {
     "@vitalets/google-translate-api": "^3.0.0",
-    "data-store": "^4.0.0",
+    "data-store": "^4.0.3",
     "eris": "^0.11.1",
     "require-reload": "^0.2.2"
   },
