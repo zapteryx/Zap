@@ -1,7 +1,5 @@
 # Zap
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/zapteryx/Zap.svg)](https://greenkeeper.io/)
-
 [![Travis](https://img.shields.io/travis/com/zapteryx/Zap.svg?style=for-the-badge)](https://travis-ci.com/zapteryx/Zap/)
 [![Discord](https://img.shields.io/discord/334654301651730432.svg?color=7289DA&label=Discord&style=for-the-badge)](https://s.zptx.icu/zapdiscord)
 [![GitHub](https://img.shields.io/github/license/zapteryx/Zap.svg?style=for-the-badge)](https://zap.zptx.icu)
